@@ -1,0 +1,10 @@
+textarea {
+    resize: none;
+    box-sizing: border-box;
+
+	width: 400px;
+	min-height: 100px;
+	padding: 5px; 
+	overflow: hidden;
+
+}
