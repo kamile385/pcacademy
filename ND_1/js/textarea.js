@@ -1,21 +1,25 @@
 $(document).ready(function () {
-//   var minRows = document.getElementById('textarea').rows;
-  var maxRows = 10;
-  var minRows = document.getElementById('textarea').getAttribute('rows');
-  var textarea = $(this);
-  var scrollHeight = document.getElementById('textarea').scrollHeight;
+  var textarea = document.getElementById('textarea');
+  var minRows = textarea.getAttribute('rows');
 
-  textarea.on('input', function () {
+  textarea.oninput = function () { myFunction(); };
+
+  function myFunction () {
     if (document.getElementById('textarea').value === '') {
-      document.getElementById('textarea').setAttribute('rows', minRows);
-    }
-    else{
-      for (var rows = minRows; rows < maxRows; rows++) {
-      var scrollHeight = $('textarea').get(0).scrollHeight;
-      $('textarea').css('height', scrollHeight + 'px');
-
-        // var a = document.getElementById('textarea').setAttribute('rows', rows);
+      textarea.setAttribute('rows', minRows);
+    } else {
+      var maxRows = 10;
+      var txt = textarea.value;
+      var cols = textarea.cols;
+      var arraytxt = txt.split('\n');
+      var rows = arraytxt.length;
+      for (var i = 0; i < arraytxt.length; i++) {
+        rows += parseInt(arraytxt[i].length / cols);
       }
+
+      if (rows > maxRows) {
+        textarea.rows = maxRows;
+      } else textarea.rows = rows;
     }
-  });
+  }
 });
