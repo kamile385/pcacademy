@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Page Title</title>
+    <title>Paskolos skaičiuoklė</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
     <script src="main.js"></script>
@@ -12,10 +12,10 @@
     <form action="action_page.php">
         <div class="container">
             <label for="dydis"><b>Paskolos dydis:</b></label>
-            <input type="text" placeholder="" name="dydis" required>
+            <input type="number" min="1" max="5000" placeholder="" name="dydis" required>
         
-            <label for="terminas"><b>Terminas:</b></label>
-            <input type="text" placeholder="" name="terminas" required>
+            <label for="terminas"><b>Terminas (metais):</b></label>
+            <input type="number" min="1" max="2" name="terminas" required>
 
             <button type="submit">Skaičiuoti</button>
         </div>
