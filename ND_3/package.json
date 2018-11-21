@@ -1,0 +1,15 @@
+{
+  "name": "nd_3",
+  "version": "1.0.0",
+  "description": "Reading computer resources",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kamile385/pcacademy"
+  },
+  "main": "computerResources.js",
+  "author": "Kamile Radlinskaite",
+  "license": "ISC",
+  "dependencies": {
+    "systeminformation": "^3.49.3"
+  }
+}
