@@ -6,7 +6,7 @@
     "type": "git",
     "url": "https://github.com/kamile385/pcacademy"
   },
-  "main": "computerResources.js",
+  "main": "monitor.js",
   "author": "Kamile Radlinskaite",
   "license": "ISC",
   "dependencies": {
