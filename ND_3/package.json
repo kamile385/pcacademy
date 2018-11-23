@@ -8,7 +8,7 @@
   },
   "main": "monitor.js",
   "author": "Kamile Radlinskaite",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "systeminformation": "^3.49.3"
   }
