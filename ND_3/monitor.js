@@ -1,9 +1,22 @@
 const si = require('systeminformation');
 let os 	= require('os-utils');
+const CONFIG = require("./config.js");
 
-let time_interval = 500;
+setInterval(printPcStatistics, CONFIG.TIME_INTERVAL);
 
-setInterval(function() { 
+function printPcStatistics(){
+    printCPUUsage();
+    printRAMUsage();
+    console.log('...........................');
+};
+
+function printCPUUsage() { 
+    os.cpuUsage(function(v){
+        console.log('CPU Usage    : ' + (Math.floor(v * 100)) + ' %');
+    });
+}
+
+function printRAMUsage() {
     si.mem().then(data => {
         console.log('MEMORY in bytes:');
         console.log('Total        :', data.total);
@@ -12,8 +25,4 @@ setInterval(function() {
         let memoryPercentage = (Math.floor((data.used / data.total) * 100));
         console.log('Used         : ' + memoryPercentage + ' %');
     });
-    os.cpuUsage(function(v){
-        console.log('CPU Usage    : ' + (Math.floor(v * 100)) + ' %');
-    });
-    console.log('...........................');
-}, time_interval)
+}
