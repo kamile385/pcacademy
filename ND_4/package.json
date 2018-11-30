@@ -1,0 +1,24 @@
+{
+  "name": "projektas",
+  "version": "1.0.0",
+  "description": "API with Node",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kamile385/pcacademy.git"
+  },
+  "author": "Kamile R.",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kamile385/pcacademy/issues"
+  },
+  "homepage": "https://github.com/kamile385/pcacademy#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "mongoose": "^5.3.14"
+  }
+}
