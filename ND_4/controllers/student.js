@@ -8,8 +8,6 @@ exports.create = function(request, response) {
         address: request.body.address,
         telephone: request.body.telephone,
         email: request.body.email,
-        grade: request.body.grade,
-        program: request.body.program,
         group: request.body.group,
         personal_identification_number: request.body.personal_identification_number
     });

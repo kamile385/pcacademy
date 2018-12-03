@@ -6,11 +6,31 @@ exports.create = function(request, response) {
         telephone: request.body.telephone,
         email: request.body.email,
         program: request.body.program,
-        group: request.body.group
+        group: request.body.group,
+        username: request.body.username,
+        password: request.body.password
     });
 
     teacher.save( () => {
         response.send('Saved!');
+        var teacher = this;
+
+        // only hash the password if it has been modified (or is new)
+        if (!teacher.isModified('password')) return next();
+
+        // generate a salt
+        bcrypt.genSalt(SALT_WORK_FACTOR, function(err, salt) {
+            if (err) return next(err);
+
+            // hash the password using our new salt
+            bcrypt.hash(teacher.password, salt, function(err, hash) {
+                if (err) return next(err);
+
+                // override the cleartext password with the hashed one
+                teacher.password = hash;
+                next();
+            });
+        });
     });
 }
 

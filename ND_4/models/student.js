@@ -22,8 +22,6 @@ let StudentSchema = new Schema({
         unique: true,
         max: 100
     },
-    grade: {type: Number, required: true, max: 12},
-    program: {type: String, required: true, max: 200},
     group: {type: String, required: true, max: 200},
     personal_identification_number: {
         type: String, 

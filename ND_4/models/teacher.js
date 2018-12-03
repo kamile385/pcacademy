@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
+const bcrypt = require('bcrypt');
+const SALT_WORK_FACTOR = 10;
 
 let TeacherSchema = new Schema({
     teacher_name_surname: {type: String, required: true, max: 100},
@@ -20,7 +22,16 @@ let TeacherSchema = new Schema({
         max: 100
     },
     program: {type: String, required: true, max: 200},
-    group: {type: String, required: true, max: 200}
-})
+    group: {type: String, required: true, max: 200},
+    username: { type: String, required: true, index: { unique: true } },
+    password: { type: String, required: true }
+});
+
+TeacherSchema.methods.comparePassword = function(candidatePassword, cb) {
+    bcrypt.compare(candidatePassword, this.password, function(err, isMatch) {
+        if (err) return cb(err);
+        cb(null, isMatch);
+    });
+};
 
 module.exports = mongoose.model('Teacher', TeacherSchema);
