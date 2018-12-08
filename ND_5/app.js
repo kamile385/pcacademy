@@ -35,3 +35,5 @@ app.use('/users', user);
 app.listen(CONFIG.PORT, () => {
     console.log('Server started!');
 })
+
+module.exports = app;

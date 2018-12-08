@@ -21,7 +21,7 @@ let TeacherSchema = new Schema({
     },
     program: {type: String, required: true, max: 200},
     group: {type: String, required: true, max: 200},
-    password: { type: String, required: true }
+    // password: { type: String, required: true }
 });
 
 module.exports = mongoose.model('Teacher', TeacherSchema);

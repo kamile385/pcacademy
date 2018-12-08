@@ -1,4 +1,4 @@
-const Student = require('../models/student');
+const Attendance = require('../models/attendance');
 
 exports.create = async function(request, response) {
     let attendance = new Attendance({

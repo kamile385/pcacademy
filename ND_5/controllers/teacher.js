@@ -7,7 +7,7 @@ exports.create = async function(request, response) {
         email: request.body.email,
         program: request.body.program,
         group: request.body.group,
-        password: request.body.password
+        // password: request.body.password
     });
 
     let result = await teacher.save();
