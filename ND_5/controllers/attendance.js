@@ -3,14 +3,14 @@ const boom = require('boom');
 
 exports.create = async function(request, response, next) {
     try{
-    let attendance = new Attendance({
-        date: request.body.date,
-        status: request.body.status,
-        remark: request.body.remark
-    });
+        let attendance = new Attendance({
+            date: request.body.date,
+            status: request.body.status,
+            remark: request.body.remark
+        });
 
-    let result = await attendance.save();
-    response.send(result);
+        let result = await attendance.save();
+        response.send(result);
     } catch(error) {
         next(boom.badData(error));
     }
@@ -18,8 +18,8 @@ exports.create = async function(request, response, next) {
 
 exports.getAll = async function (request, response, next) {
     try {
-    let attendances = await Attendance.find();
-    response.send(attendances);
+        let attendances = await Attendance.find();
+        response.send(attendances);
     } catch(error) {
         next(boom.badData(error));
     }
@@ -27,8 +27,8 @@ exports.getAll = async function (request, response, next) {
 
 exports.getById = async function (request, response, next) {
     try {
-    let attendances = await Attendance.findById(request.params.id, error);
-    response.send(attendances);
+        let attendances = await Attendance.findById(request.params.id);
+        response.send(attendances);
     } catch(error) {
         next(boom.badData(error));
     }
@@ -36,8 +36,8 @@ exports.getById = async function (request, response, next) {
 
 exports.updateById = async function (request, response, next) {
     try {
-    let attendances = await Attendance.findByIdAndUpdate(request.params.id, request.body, {new: true}, error);
-    response.send(attendances);
+        let attendances = await Attendance.findByIdAndUpdate(request.params.id, request.body, {new: true});
+        response.send(attendances);
     } catch(error) {
         next(boom.badData(error));
     }
@@ -45,12 +45,12 @@ exports.updateById = async function (request, response, next) {
 
 exports.deleteById = async function (request, response, next) {
     try {
-    let attendances = await Attendance.findOneAndDelete(request.params.id, error);
+        let attendances = await Attendance.findOneAndDelete(request.params.id);
         const res = {
             message: "Attendance successfully deleted",
             id: attendances.id
         };
-    return response.send(res);
+        return response.send(res);
     } catch(error) {
         next(boom.badData(error));
     }

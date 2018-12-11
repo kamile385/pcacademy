@@ -18,10 +18,10 @@ require('./authentication/localStrategy');
 require('./authentication/jwtStrategy');
 
 if(process.env.NODE_ENV && process.env.NODE_ENV === 'test'){
-    mongoose.connect(CONFIG.CONNECTION_STRING_TEST);
+    mongoose.connect(CONFIG.CONNECTION_STRING_TEST, { useNewUrlParser: true });
 }
 else{
-    mongoose.connect(CONFIG.CONNECTION_STRING);
+    mongoose.connect(CONFIG.CONNECTION_STRING,{ useNewUrlParser: true });
 }
 
 mongoose.Promise = global.Promise;

@@ -34,24 +34,34 @@ exports.getAll = async function (request, response, next) {
     // })
 }
 
-exports.getById = async function (request, response) {
-    let students = await Student.findById(request.params.id, error);
-    if (error) response.send(error);
-    response.send(students);
+exports.getById = async function (request, response, next) {
+    try {
+        let students = await Student.findById(request.params.id);
+        response.send(students);
+    } catch(error){
+        next(boom.badData(error));
+    }
 }
 
-exports.updateById = async function (request, response) {
-    let students = await Student.findByIdAndUpdate(request.params.id, request.body, {new: true}, error);
-    if (error) response.send(error);
-    response.send(students);
+exports.updateById = async function (request, response, next) {
+    try{
+        let students = await Student.findByIdAndUpdate(request.params.id, request.body, {new: true});
+        response.send(students);
+    } catch(error) {
+        next(boom.badData(error));
+    }
 }
 
-exports.deleteById = async function (request, response) {
-    let students = await Student.findOneAndDelete(request.params.id, error);
-    if (error) response.send(error);
-        const res = {
-            message: "Student successfully deleted",
-            id: students.id
-        };
-    return response.send(res);
+exports.deleteById = async function (request, response, next) {
+    try{
+        let students = await Student.findOneAndDelete(request.params.id);
+        if (error) response.send(error);
+            const res = {
+                message: "Student successfully deleted",
+                id: students.id
+            };
+        return response.send(res);
+    } catch(error) {
+        next(boom.badData(error));
+    }
 }
