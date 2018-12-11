@@ -1,45 +1,58 @@
 const Discount = require('../models/discount');
+const boom = require('boom');
 
-exports.create = function(request, response) {
-    let discount = new Discount({
-        state_financing: request.body.state_financing,
-        praise: request.body.praise,
-        not_first_year: request.body.not_first_year,
-        second_program: request.body.second_program
-    });
+exports.create = async function(request, response, next) {
+    try{
+        let discount = new Discount({
+            state_financing: request.body.state_financing,
+            praise: request.body.praise,
+            not_first_year: request.body.not_first_year,
+            second_program: request.body.second_program
+        });
 
-    discount.save( () => {
-        response.send('Saved!');
-    });
+        let result = await discount.save();
+        response.send(result);
+    } catch(error) {
+        next(boom.badData(error));
+    }
 }
 
-exports.getAll = function (request, response) {
-    Discount.find((error, discounts) => {
+exports.getAll = async function (request, response, next) {
+    try {
+        let discounts = await Discount.find();
         response.send(discounts);
-    })
+    } catch(error) {
+        next(boom.badData(error));
+    }
 }
 
-exports.getById = function (request, response) {
-    Discount.findById(request.params.id, (error, discounts) => {
-        if (error) response.send(error);
-        response.send(discounts)
-    });
-}
-
-exports.updateById = function (request, response) {
-    Discount.findByIdAndUpdate(request.params.id, request.body, {new: true}, (error, discounts) => {
-        if (error) response.send(error);
+exports.getById = async function (request, response, next) {
+    try{
+        let discounts = await Discount.findById(request.params.id);
         response.send(discounts);
-    });
+    } catch(error) {
+        next(boom.badData(error));
+    }
 }
 
-exports.deleteById = function (request, response) {
-    Discount.findByIdAndDelete(request.params.id, (error, discounts) => {
-        if (error) response.send(error);
+exports.updateById = async function (request, response, next) {
+    try{
+        let discounts = await Discount.findByIdAndUpdate(request.params.id, request.body, {new: true});
+        response.send(discounts);
+    } catch(error) {
+        next(boom.badData(error));
+    }
+}
+
+exports.deleteById = async function (request, response, next) {
+    try{
+        let discounts = await Discount.findByIdAndDelete(request.params.id);
         const res = {
             message: "Discount successfully deleted",
             id: discounts.id
         };
         return response.send(res);
-    });
+    } catch(error) {
+        next(boom.badData(error));
+    }
 }

@@ -6,4 +6,6 @@ const router = express.Router();
 
 router.post('/signup', passport.authenticate('signup', { session: false }), userController.signUp);
 
+router.post('/login', userController.login);
+
 module.exports = router;

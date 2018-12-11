@@ -28,6 +28,7 @@ let StudentSchema = new Schema({
         match: [/^([\d\-]{11})$/, 'Please fill a valid personal identification number'], 
         required: true
     },
+    teacher: {type: Schema.Types.ObjectId, ref: 'Teacher', required: true}
 })
 
 module.exports = mongoose.model('Student', StudentSchema);

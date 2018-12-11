@@ -20,8 +20,14 @@ let TeacherSchema = new Schema({
         max: 100
     },
     program: {type: String, required: true, max: 200},
-    group: {type: String, required: true, max: 200},
+    group: {type: String, required: true, max: 200}
     // password: { type: String, required: true }
-});
+}, {toJSON: {virtuals: true}});
+
+TeacherSchema.virtual('students', {
+    ref: 'Student',
+    localField: '_id',
+    foreignField: 'teacher'
+})
 
 module.exports = mongoose.model('Teacher', TeacherSchema);

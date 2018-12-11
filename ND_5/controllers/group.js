@@ -1,46 +1,59 @@
 const Group = require('../models/group');
+const boom = require('boom');
 
-exports.create = function(request, response) {
-    let group = new Group({
-        name: request.body.name,
-        group_grade: request.body.group_grade,
-        day_of_week: request.body.week_day,
-        time_from: request.body.time_from,
-        time_to: request.body.time_to
-    });
+exports.create = async function(request, response, next) {
+    try{
+        let group = new Group({
+            name: request.body.name,
+            group_grade: request.body.group_grade,
+            day_of_week: request.body.week_day,
+            time_from: request.body.time_from,
+            time_to: request.body.time_to
+        });
 
-    group.save( () => {
-        response.send('Saved!');
-    });
+        let result = await group.save();
+        response.send(result);
+    } catch(error) {
+        next(boom.badData(error));
+    }
 }
 
-exports.getAll = function (request, response) {
-    Group.find((error, groups) => {
+exports.getAll = async function (request, response, next) {
+    try {
+        let groups = await Student.find();
         response.send(groups);
-    })
+    } catch(error){
+        next(boom.badData(error));
+    }
 }
 
-exports.getById = function (request, response) {
-    Group.findById(request.params.id, (error, groups) => {
-        if (error) response.send(error);
-        response.send(groups)
-    });
-}
-
-exports.updateById = function (request, response) {
-    Group.findByIdAndUpdate(request.params.id, request.body, {new: true}, (error, groups) => {
-        if (error) response.send(error);
+exports.getById = async function (request, response, next) {
+    try {
+        let groups = await Group.findById(request.params.id);
         response.send(groups);
-    });
+    } catch(error) {
+        next(boom.badData(error));
+    }
 }
 
-exports.deleteById = function (request, response) {
-    Group.findByIdAndDelete(request.params.id, (error, groups) => {
-        if (error) response.send(error);
-        const res = {
-            message: "Group successfully deleted",
-            id: groups.id
-        };
+exports.updateById = async function (request, response, next) {
+    try {
+        let groups = await Group.findByIdAndUpdate(request.params.id, request.body, {new: true});
+        response.send(groups);
+    } catch(error) {
+        next(boom.badData(error));
+    }
+}
+
+exports.deleteById = async function (request, response, next) {
+    try {
+        let groups = await Group.findOneAndDelete(request.params.id);
+            const res = {
+                message: "Group successfully deleted",
+                id: groups.id
+            };
         return response.send(res);
-    });
+    } catch(error) {
+        next(boom.badData(error));
+    }
 }

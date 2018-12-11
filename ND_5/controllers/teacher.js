@@ -1,46 +1,45 @@
 const Teacher = require('../models/teacher');
 
 exports.create = async function(request, response) {
+    try {
     let teacher = new Teacher({
         teacher_name_surname: request.body.teacher_name_surname,
         telephone: request.body.telephone,
         email: request.body.email,
         program: request.body.program,
-        group: request.body.group,
-        // password: request.body.password
+        group: request.body.group
     });
 
     let result = await teacher.save();
     response.send(result);
+    } catch(error) {
+        next(boom.badData(error));
+    }
 }
 
-exports.getAll = function (request, response) {
-    Teacher.find((error, teachers) => {
-        response.send(teachers);
-    })
+exports.getAll = async function (request, response) {
+    let teachers = await Teacher.find().populate('students');
+    response.send(teachers);
 }
 
-exports.getById = function (request, response) {
-    Teacher.findById(request.params.id, (error, teachers) => {
-        if (error) response.send(error);
-        response.send(teachers)
-    });
+exports.getById = async function (request, response) {
+    let teachers = await Teacher.findById(request.params.id, error);
+    if (error) response.send(error);
+    response.send(teachers);
 }
 
-exports.updateById = function (request, response) {
-    Teacher.findByIdAndUpdate(request.params.id, request.body, {new: true}, (error, teachers) => {
-        if (error) response.send(error);
-        response.send(teachers);
-    });
+exports.updateById = async function (request, response) {
+    let teachers = await Teacher.findByIdAndUpdate(request.params.id, request.body, {new: true}, error);
+    if (error) response.send(error);
+    response.send(teachers);
 }
 
-exports.deleteById = function (request, response) {
-    Teacher.findByIdAndDelete(request.params.id, (error, teachers) => {
-        if (error) response.send(error);
+exports.deleteById = async function (request, response) {
+    let teachers = await Teacher.findOneAndDelete(request.params.id, error);
+    if (error) response.send(error);
         const res = {
             message: "Teacher successfully deleted",
             id: teachers.id
         };
-        return response.send(res);
-    });
+    return response.send(res);
 }

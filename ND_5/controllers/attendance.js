@@ -1,6 +1,8 @@
 const Attendance = require('../models/attendance');
+const boom = require('boom');
 
-exports.create = async function(request, response) {
+exports.create = async function(request, response, next) {
+    try{
     let attendance = new Attendance({
         date: request.body.date,
         status: request.body.status,
@@ -9,35 +11,47 @@ exports.create = async function(request, response) {
 
     let result = await attendance.save();
     response.send(result);
-}
-//
-exports.getAll = function (request, response) {
-    Attendance.find((error, attendances) => {
-        response.send(attendances);
-    })
+    } catch(error) {
+        next(boom.badData(error));
+    }
 }
 
-exports.getById = function (request, response) {
-    Attendance.findById(request.params.id, (error, attendances) => {
-        if (error) response.send(error);
-        response.send(attendances)
-    });
+exports.getAll = async function (request, response, next) {
+    try {
+    let attendances = await Attendance.find();
+    response.send(attendances);
+    } catch(error) {
+        next(boom.badData(error));
+    }
 }
 
-exports.updateById = function (request, response) {
-    Attendance.findByIdAndUpdate(request.params.id, request.body, {new: true}, (error, attendances) => {
-        if (error) response.send(error);
-        response.send(attendances);
-    });
+exports.getById = async function (request, response, next) {
+    try {
+    let attendances = await Attendance.findById(request.params.id, error);
+    response.send(attendances);
+    } catch(error) {
+        next(boom.badData(error));
+    }
 }
 
-exports.deleteById = function (request, response) {
-    Attendance.findByIdAndDelete(request.params.id, (error, attendances) => {
-        if (error) response.send(error);
+exports.updateById = async function (request, response, next) {
+    try {
+    let attendances = await Attendance.findByIdAndUpdate(request.params.id, request.body, {new: true}, error);
+    response.send(attendances);
+    } catch(error) {
+        next(boom.badData(error));
+    }
+}
+
+exports.deleteById = async function (request, response, next) {
+    try {
+    let attendances = await Attendance.findOneAndDelete(request.params.id, error);
         const res = {
             message: "Attendance successfully deleted",
             id: attendances.id
         };
-        return response.send(res);
-    });
+    return response.send(res);
+    } catch(error) {
+        next(boom.badData(error));
+    }
 }
