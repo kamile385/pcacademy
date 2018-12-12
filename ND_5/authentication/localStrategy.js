@@ -2,16 +2,31 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const UserModel = require('../models/user');
 
-const signUpStrategy = new LocalStrategy({
-    usernameField: 'email',
-    passwordField: 'password'
-}, createUser);
+// const signUpStrategy = new LocalStrategy({
+//     usernameField: 'email',
+//     passwordField: 'password'
+// }, createUser);
 
-async function createUser (email, password, done) {
+async function createUser (done) {
+    // try {
+    //     const user = await UserModel.create({email, password});
+    //     done(null, user);
+
+    // } catch(error) {
+    //     done(error);
+    // }
     try {
-        const user = await UserModel.create({email, password});
+        const user = await UserModel.create({
+            teacher_name_surname,
+            telephone,
+            email,
+            program,
+            group
+        });
         done(null, user);
 
+        // let result = await teacher.save();
+        // response.send(result);
     } catch(error) {
         done(error);
     }
@@ -38,5 +53,5 @@ async function loginUser (email, password, done) {
     }
 }
 
-passport.use('signup', signUpStrategy);
+// passport.use('signup', signUpStrategy);
 passport.use('login', loginStrategy);
