@@ -37,7 +37,11 @@ exports.getById = async function (request, response, next) {
 exports.updateById = async function (request, response, next) {
     try {
         let attendances = await Attendance.findByIdAndUpdate(request.params.id, request.body, {new: true});
-        response.send(attendances);
+        const res = {
+            message: "Attendance updated!",
+            attendances
+        };
+        return response.send(res);
     } catch(error) {
         next(boom.badData(error));
     }
@@ -47,7 +51,7 @@ exports.deleteById = async function (request, response, next) {
     try {
         let attendances = await Attendance.findOneAndDelete(request.params.id);
         const res = {
-            message: "Attendance successfully deleted",
+            message: "Attendance successfully deleted!",
             id: attendances.id
         };
         return response.send(res);

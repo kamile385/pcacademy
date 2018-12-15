@@ -29,9 +29,6 @@ exports.getAll = async function (request, response, next) {
     } catch(error) {
         next(boom.badData(error));
     }
-    // Student.find((error, students) => {
-    //     response.send(students);
-    // })
 }
 
 exports.getById = async function (request, response, next) {

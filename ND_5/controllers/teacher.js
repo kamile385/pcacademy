@@ -8,7 +8,8 @@ exports.create = async function(request, response, next) {
             telephone: request.body.telephone,
             email: request.body.email,
             program: request.body.program,
-            group: request.body.group
+            group: request.body.group, 
+            password: request.body.password
         });
 
         let result = await teacher.save();

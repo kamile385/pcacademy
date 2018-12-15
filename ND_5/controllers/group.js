@@ -6,7 +6,7 @@ exports.create = async function(request, response, next) {
         let group = new Group({
             name: request.body.name,
             group_grade: request.body.group_grade,
-            day_of_week: request.body.week_day,
+            day_of_week: request.body.day_of_week,
             time_from: request.body.time_from,
             time_to: request.body.time_to
         });
@@ -20,7 +20,7 @@ exports.create = async function(request, response, next) {
 
 exports.getAll = async function (request, response, next) {
     try {
-        let groups = await Student.find();
+        let groups = await Group.find();
         response.send(groups);
     } catch(error){
         next(boom.badData(error));
@@ -39,7 +39,11 @@ exports.getById = async function (request, response, next) {
 exports.updateById = async function (request, response, next) {
     try {
         let groups = await Group.findByIdAndUpdate(request.params.id, request.body, {new: true});
-        response.send(groups);
+        const res = {
+            message: "Group updated!",
+            groups
+        };
+        return response.send(res);
     } catch(error) {
         next(boom.badData(error));
     }
@@ -49,7 +53,7 @@ exports.deleteById = async function (request, response, next) {
     try {
         let groups = await Group.findOneAndDelete(request.params.id);
             const res = {
-                message: "Group successfully deleted",
+                message: "Group successfully deleted!",
                 id: groups.id
             };
         return response.send(res);

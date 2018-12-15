@@ -38,7 +38,11 @@ exports.getById = async function (request, response, next) {
 exports.updateById = async function (request, response, next) {
     try{
         let discounts = await Discount.findByIdAndUpdate(request.params.id, request.body, {new: true});
-        response.send(discounts);
+        const res = {
+            message: "Discount updated!",
+            discounts
+        };
+        return response.send(res);
     } catch(error) {
         next(boom.badData(error));
     }
@@ -48,7 +52,7 @@ exports.deleteById = async function (request, response, next) {
     try{
         let discounts = await Discount.findByIdAndDelete(request.params.id);
         const res = {
-            message: "Discount successfully deleted",
+            message: "Discount successfully deleted!",
             id: discounts.id
         };
         return response.send(res);

@@ -21,7 +21,8 @@ async function createUser (done) {
             telephone,
             email,
             program,
-            group
+            group,
+            password
         });
         done(null, user);
 
