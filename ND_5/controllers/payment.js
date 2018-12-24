@@ -17,7 +17,7 @@ exports.create = async function(request, response, next) {
 
 exports.getAll = async function (request, response, next) {
     try {
-        let payments = await Attendance.find();
+        let payments = await Payment.find();
         response.send(payments);
     } catch(error) {
         next(boom.badData(error));
@@ -26,7 +26,7 @@ exports.getAll = async function (request, response, next) {
 
 exports.getById = async function (request, response, next) {
     try {
-        let payments = await Attendance.findById(request.params.id);
+        let payments = await Payment.findById(request.params.id);
         response.send(payments);
     } catch(error) {
         next(boom.badData(error));
@@ -35,8 +35,12 @@ exports.getById = async function (request, response, next) {
 
 exports.updateById = async function (request, response, next) {
     try {
-        let payments = await Attendance.findByIdAndUpdate(request.params.id, request.body, {new: true});
-        response.send(payments);
+        let payments = await Payment.findByIdAndUpdate(request.params.id, request.body, {new: true});
+        const res = {
+            message: "Payment updated!",
+            payments
+        };
+        return response.send(res);
     } catch(error) {
         next(boom.badData(error));
     }
@@ -45,22 +49,12 @@ exports.updateById = async function (request, response, next) {
 exports.deleteById = async function (request, response, next) {
     try {
         let payments = await Payment.findOneAndDelete(request.params.id);
-        if (error) response.send(error);
-            const res = {
-                message: "Payment successfully deleted",
-                id: payments.id
-            };
+        const res = {
+            message: "Payment successfully deleted!",
+            id: payments.id
+        };
         return response.send(res);
     } catch(error) {
         next(boom.badData(error));
     }
-    
-    // Payment.findByIdAndDelete(request.params.id, (error, payments) => {
-    //     if (error) response.send(error);
-    //     const res = {
-    //         message: "Payment successfully deleted",
-    //         id: payments.id
-    //     };
-    //     return response.send(res);
-    // });
 }

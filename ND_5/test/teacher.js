@@ -3,14 +3,14 @@ process.env.NODE_ENV = 'test';
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 const app = require('../app');
-const StudentModel = require('../models/student');
+const TeacherModel = require('../models/teacher');
 
 chai.should();
 chai.use(chaiHttp);
 
-describe('Students', () => {
+describe('Teachers', () => {
   beforeEach(done => {
-    StudentModel.remove({}, error => {
+    TeacherModel.remove({}, error => {
       done();
       if (error) {
         console.log(error);
@@ -18,10 +18,10 @@ describe('Students', () => {
     });
   });
 
-  describe('/GET student', () => {
-    it('it should get all students', done => {
+  describe('/GET teacher', () => {
+    it('it should get all teachers', done => {
       chai.request(app)
-        .get('/students')
+        .get('/teachers')
         .end((error, response) => {
           response.should.have.status(200);
           response.body.should.be.a('array');
@@ -35,9 +35,9 @@ describe('Students', () => {
     });
   });
 
-  describe('/POST student', () => {
-    it('it should post student', done => {
-      let student = {
+  describe('/POST teacher', () => {
+    it('it should post teacher', done => {
+      let teacher = {
         created_at: '2018-10-15T14:30:14.003Z',
         student_name_surname: 'Name',
         parent_name_surname: 'Surname',
@@ -50,7 +50,7 @@ describe('Students', () => {
       };
       chai.request(app)
         .post('/students')
-        .send(student)
+        .send(teacher)
         .end((error, response) => {
           response.should.have.status(200);
           response.body.should.be.a('object');
