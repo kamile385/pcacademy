@@ -17,11 +17,10 @@ const user = require('./routes/user');
 require('./authentication/localStrategy');
 require('./authentication/jwtStrategy');
 
-if(process.env.NODE_ENV && process.env.NODE_ENV === 'test'){
-    mongoose.connect(CONFIG.CONNECTION_STRING_TEST, { useNewUrlParser: true });
-}
-else{
-    mongoose.connect(CONFIG.CONNECTION_STRING,{ useNewUrlParser: true });
+if (process.env.NODE_ENV && process.env.NODE_ENV === 'test') {
+  mongoose.connect(CONFIG.CONNECTION_STRING_TEST, { useNewUrlParser: true });
+} else {
+  mongoose.connect(CONFIG.CONNECTION_STRING, { useNewUrlParser: true });
 }
 
 mongoose.Promise = global.Promise;
@@ -29,9 +28,9 @@ mongoose.Promise = global.Promise;
 const app = express();
 
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended:false}));
-app.use('/students', passport.authenticate('jwt', {session: false}), student);
-app.use('/teachers', passport.authenticate('jwt', {session: false}), teacher);
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use('/students', passport.authenticate('jwt', { session: false }), student);
+app.use('/teachers', passport.authenticate('jwt', { session: false }), teacher);
 app.use('/attendances', attendance);
 app.use('/programs', program);
 app.use('/groups', group);
@@ -42,7 +41,7 @@ app.use('/users', user);
 app.use(handleError);
 
 app.listen(CONFIG.PORT, () => {
-    console.log('Server started!');
-})
+  console.log('Server started!');
+});
 
 module.exports = app;

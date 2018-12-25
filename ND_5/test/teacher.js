@@ -49,7 +49,7 @@ describe('Teachers', () => {
         teacher: 1
       };
       chai.request(app)
-        .post('/students')
+        .post('/teachers')
         .send(teacher)
         .end((error, response) => {
           response.should.have.status(200);
@@ -72,9 +72,9 @@ describe('Teachers', () => {
     });
   });
 
-  describe('/GET/:id student', () => {
-    it('it should GET an student by the given id', (done) => {
-      let student = new StudentModel({
+  describe('/GET/:id teacher', () => {
+    it('it should GET an teacher by the given id', (done) => {
+      let teacher = new TeacherModel({
         created_at: '2018-10-15T14:30:14.003Z',
         student_name_surname: 'Name',
         parent_name_surname: 'Surname',
@@ -85,10 +85,10 @@ describe('Teachers', () => {
         identification_number: '11111111111',
         teacher: 1
       });
-      student.save((error, student) => {
+      teacher.save((error, teacher) => {
         chai.request(app)
-          .get('/students/' + student.id)
-          .send(student)
+          .get('/teachers/' + teacher.id)
+          .send(teacher)
           .end((error, response) => {
             response.should.have.status(200);
             response.body.should.have.property('created_at');
@@ -100,7 +100,7 @@ describe('Teachers', () => {
             response.body.should.have.property('group');
             response.body.should.have.property('identification_number');
             response.body.should.have.property('teacher');
-            response.body.should.have.property('_id').eql(student.id);
+            response.body.should.have.property('_id').eql(teacher.id);
             done();
             console.log(response.body);
             if (error) {
@@ -114,9 +114,9 @@ describe('Teachers', () => {
     });
   });
 
-  describe('/PUT/:id program', () => {
-    it('it should UPDATE an program by given id', (done) => {
-      let student = new StudentModel({
+  describe('/PUT/:id teacher', () => {
+    it('it should UPDATE an teacher by given id', (done) => {
+      let teacher = new TeacherModel({
         created_at: '2018-10-15T14:30:14.003Z',
         student_name_surname: 'Name',
         parent_name_surname: 'Surname',
@@ -127,9 +127,9 @@ describe('Teachers', () => {
         identification_number: '11111111111',
         teacher: 1
       });
-      student.save((error, student) => {
+      teacher.save((error, teacher) => {
         chai.request(app)
-          .put('/students/' + student.id)
+          .put('/teachers/' + teacher.id)
           .send({
             created_at: '2018-10-10T14:30:14.003Z',
             student_name_surname: 'Name',
@@ -144,7 +144,7 @@ describe('Teachers', () => {
           .end((error, response) => {
             response.should.have.status(200);
             response.body.should.be.a('object');
-            response.body.should.have.property('message').eql('Student updated!');
+            response.body.should.have.property('message').eql('Teacher updated!');
             done();
             console.log(response.body);
             if (error) {
@@ -158,9 +158,9 @@ describe('Teachers', () => {
     });
   });
 
-  describe('/DELETE/:id student', () => {
-    it('it should DELETE a student by given id', (done) => {
-      let student = new StudentModel({
+  describe('/DELETE/:id teacher', () => {
+    it('it should DELETE a teacher by given id', (done) => {
+      let teacher = new TeacherModel({
         created_at: '2018-10-15T14:30:14.003Z',
         student_name_surname: 'Name',
         parent_name_surname: 'Surname',
@@ -171,13 +171,13 @@ describe('Teachers', () => {
         identification_number: '11111111111',
         teacher: 1
       });
-      student.save((error, student) => {
+      teacher.save((error, teacher) => {
         chai.request(app)
-          .delete('/students/' + student.id)
+          .delete('/teachers/' + teacher.id)
           .end((error, response) => {
             response.should.have.status(200);
             response.body.should.be.a('object');
-            response.body.should.have.property('message').eql('Student successfully deleted!');
+            response.body.should.have.property('message').eql('Teacher successfully deleted!');
             done();
             console.log(response.body);
             if (error) {

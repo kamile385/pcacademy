@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
+const CONFIG = require('../config');
 
 let StudentSchema = new Schema({
   created_at: { type: Date, default: Date.now, required: true },
@@ -10,7 +11,7 @@ let StudentSchema = new Schema({
   telephone: {
     type: String,
     required: true,
-    match: [/^[+]3706[0-9]{7}$/, 'Please fill a valid phone number: +370...'],
+    match: [CONFIG.TELEPHONE_REGEX, 'Please fill a valid phone number: +370...'],
     max: 12
   },
   email: {
@@ -18,17 +19,29 @@ let StudentSchema = new Schema({
     trim: true,
     lowercase: true,
     required: true,
-    match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Please fill a valid email address'],
+    match: [CONFIG.EMAIL_REGEX, 'Please fill a valid email address'],
     unique: true,
     max: 100
   },
   group: { type: String, required: true, max: 200 },
   identification_number: {
     type: String,
-    match: [/^([\d\-]{11})$/, 'Please fill a valid personal identification number'],
+    match: [CONFIG.ID_NUMBER_REGEX, 'Please fill a valid personal identification number'],
     required: true
   },
   teacher: { type: Schema.Types.ObjectId, ref: 'Teacher', required: true }
+});
+
+StudentSchema.virtual('payments', {
+  ref: 'Payment',
+  localField: '_id',
+  foreignField: 'student'
+});
+
+StudentSchema.virtual('discounts', {
+  ref: 'Discount',
+  localField: '_id',
+  foreignField: 'student'
 });
 
 module.exports = mongoose.model('Student', StudentSchema);

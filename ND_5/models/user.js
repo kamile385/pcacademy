@@ -5,19 +5,20 @@ const Schema = mongoose.Schema;
 const SALT_ROUNDS = 10;
 
 let UserSchema = new Schema({
-    email: {type: String, required: true, unique: true},
-    password: {type: String, required: true}
+  email: { type: String, required: true, unique: true },
+  password: { type: String, required: true }
 });
 
 UserSchema.pre('save', createHashedPassword);
 
-async function createHashedPassword(next) {
-    this.password = await bcrypt.hash(this.password, SALT_ROUNDS);
-    next();
+async function createHashedPassword (next) {
+  this.password = await bcrypt.hash(this.password, SALT_ROUNDS);
+  next();
 }
 
 UserSchema.methods.isValidPassword = async function (password) {
-    return await bcrypt.compare(password, this.password);
-}
+  let validation = await bcrypt.compare(password, this.password);
+  return validation;
+};
 
 module.exports = mongoose.model('User', UserSchema);
