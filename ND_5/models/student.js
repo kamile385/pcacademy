@@ -30,7 +30,7 @@ let StudentSchema = new Schema({
     required: true
   },
   teacher: { type: Schema.Types.ObjectId, ref: 'Teacher', required: true }
-});
+}, { toJSON: { virtuals: true } });
 
 StudentSchema.virtual('payments', {
   ref: 'Payment',
@@ -38,8 +38,8 @@ StudentSchema.virtual('payments', {
   foreignField: 'student'
 });
 
-StudentSchema.virtual('discounts', {
-  ref: 'Discount',
+StudentSchema.virtual('attendances', {
+  ref: 'Attendance',
   localField: '_id',
   foreignField: 'student'
 });

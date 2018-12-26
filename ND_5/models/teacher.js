@@ -1,7 +1,10 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
 
 const Schema = mongoose.Schema;
 const CONFIG = require('../config');
+
+const SALT_ROUNDS = 10;
 
 let TeacherSchema = new Schema({
   teacher_name_surname: { type: String, required: true, max: 100 },
@@ -29,16 +32,22 @@ TeacherSchema.virtual('students', {
   foreignField: 'teacher'
 });
 
-TeacherSchema.virtual('groups', {
-  ref: 'Group',
-  localField: '_id',
-  foreignField: 'teacher'
-});
-
 TeacherSchema.virtual('programs', {
   ref: 'Program',
   localField: '_id',
   foreignField: 'teacher'
 });
+
+TeacherSchema.pre('save', createHashedPassword);
+
+async function createHashedPassword (next) {
+  this.password = await bcrypt.hash(this.password, SALT_ROUNDS);
+  next();
+}
+
+TeacherSchema.methods.isValidPassword = async function (password) {
+  let validation = await bcrypt.compare(password, this.password);
+  return validation;
+};
 
 module.exports = mongoose.model('Teacher', TeacherSchema);

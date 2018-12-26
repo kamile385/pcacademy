@@ -24,7 +24,10 @@ exports.create = async function (request, response, next) {
 
 exports.getAll = async function (request, response, next) {
   try {
-    let students = await Student.find().populate('teacher');
+    let students = await Student.find()
+      .populate('teacher')
+      .populate('attendances')
+      .populate('payments');
     response.send(students);
   } catch (error) {
     next(boom.badData(error));

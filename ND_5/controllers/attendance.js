@@ -6,7 +6,8 @@ exports.create = async function (request, response, next) {
     let attendance = new Attendance({
       date: request.body.date,
       status: request.body.status,
-      remark: request.body.remark
+      remark: request.body.remark,
+      student: request.body.student
     });
 
     let result = await attendance.save();
@@ -18,7 +19,7 @@ exports.create = async function (request, response, next) {
 
 exports.getAll = async function (request, response, next) {
   try {
-    let attendances = await Attendance.find();
+    let attendances = await Attendance.find().populate('student');
     response.send(attendances);
   } catch (error) {
     next(boom.badData(error));

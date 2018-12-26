@@ -4,8 +4,13 @@ const boom = require('boom');
 exports.create = async function (request, response, next) {
   try {
     let payment = new Payment({
-      date: request.body.date,
-      amount: request.body.amount
+      month: request.body.month,
+      amount: request.body.amount,
+      state_financing: request.body.state_financing,
+      praise: request.body.praise,
+      not_first_year: request.body.not_first_year,
+      second_program: request.body.second_program,
+      student: request.body.student
     });
 
     let result = await payment.save();
@@ -17,7 +22,7 @@ exports.create = async function (request, response, next) {
 
 exports.getAll = async function (request, response, next) {
   try {
-    let payments = await Payment.find();
+    let payments = await Payment.find().populate('student');
     response.send(payments);
   } catch (error) {
     next(boom.badData(error));

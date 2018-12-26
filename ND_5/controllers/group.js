@@ -8,7 +8,8 @@ exports.create = async function (request, response, next) {
       group_grade: request.body.group_grade,
       day_of_week: request.body.day_of_week,
       time_from: request.body.time_from,
-      time_to: request.body.time_to
+      time_to: request.body.time_to,
+      program: request.body.program
     });
 
     let result = await group.save();
@@ -20,7 +21,7 @@ exports.create = async function (request, response, next) {
 
 exports.getAll = async function (request, response, next) {
   try {
-    let groups = await Group.find();
+    let groups = await Group.find().populate('program');
     response.send(groups);
   } catch (error) {
     next(boom.badData(error));

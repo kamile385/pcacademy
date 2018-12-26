@@ -18,7 +18,9 @@ exports.create = async function (request, response, next) {
 
 exports.getAll = async function (request, response, next) {
   try {
-    let programs = await Program.find();
+    let programs = await Program.find()
+      .populate('teacher')
+      .populate('groups');
     response.send(programs);
   } catch (error) {
     next(boom.badData(error));
