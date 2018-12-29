@@ -3,18 +3,46 @@ process.env.NODE_ENV = 'test';
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 const app = require('../app');
+const CONFIG = require('../config');
 const StudentModel = require('../models/student');
+const boom = require('boom');
+var mongoose = require('mongoose');
 
 chai.should();
 chai.use(chaiHttp);
+
+let student = new StudentModel({
+  student_name_surname: 'Name Surname',
+  parent_name_surname: 'Name Surname',
+  address: 'Address 15',
+  telephone: '+37060000000',
+  email: 'email@email.com',
+  group: 'group',
+  identification_number: '11111111111',
+  teacher: mongoose.Types.ObjectId('51bb793aca2ab77a3200000d')
+});
 
 describe('Students', () => {
   beforeEach(done => {
     StudentModel.remove({}, error => {
       done();
       if (error) {
-        console.log(error);
+        done(boom.badData(error));
       }
+    });
+  });
+
+  describe('/GET with unauthorized access', () => {
+    it('it should return unauthorized', done => {
+      chai.request(app)
+        .get('/students')
+        .end((error, response) => {
+          response.should.have.status(401);
+          done();
+          if (error) {
+            done(boom.badData(error));
+          }
+        });
     });
   });
 
@@ -22,6 +50,7 @@ describe('Students', () => {
     it('it should get all students', done => {
       chai.request(app)
         .get('/students')
+        .set('token', CONFIG.TOKEN_TEST)
         .end((error, response) => {
           response.should.have.status(200);
           response.body.should.be.a('array');
@@ -29,7 +58,7 @@ describe('Students', () => {
           done();
           console.log(response.body);
           if (error) {
-            console.log(error);
+            done(boom.badData(error));
           }
         });
     });
@@ -37,24 +66,13 @@ describe('Students', () => {
 
   describe('/POST student', () => {
     it('it should post student', done => {
-      let student = {
-        created_at: '2018-10-15T14:30:14.003Z',
-        student_name_surname: 'Name',
-        parent_name_surname: 'Surname',
-        address: 'Address 15',
-        telephone: '+37060000000',
-        email: 'email@email.com',
-        group: 'group',
-        identification_number: '11111111111',
-        teacher: 1
-      };
       chai.request(app)
         .post('/students')
+        .set('token', CONFIG.TOKEN_TEST)
         .send(student)
         .end((error, response) => {
           response.should.have.status(200);
           response.body.should.be.a('object');
-          response.body.should.have.property('created_at');
           response.body.should.have.property('student_name_surname');
           response.body.should.have.property('parent_name_surname');
           response.body.should.have.property('address');
@@ -66,7 +84,7 @@ describe('Students', () => {
           done();
           console.log(response.body);
           if (error) {
-            console.log(error);
+            done(boom.badData(error));
           }
         });
     });
@@ -74,24 +92,13 @@ describe('Students', () => {
 
   describe('/GET/:id student', () => {
     it('it should GET an student by the given id', (done) => {
-      let student = new StudentModel({
-        created_at: '2018-10-15T14:30:14.003Z',
-        student_name_surname: 'Name',
-        parent_name_surname: 'Surname',
-        address: 'Address 15',
-        telephone: '+37060000000',
-        email: 'email@email.com',
-        group: 'group',
-        identification_number: '11111111111',
-        teacher: 1
-      });
       student.save((error, student) => {
         chai.request(app)
           .get('/students/' + student.id)
+          .set('token', CONFIG.TOKEN_TEST)
           .send(student)
           .end((error, response) => {
             response.should.have.status(200);
-            response.body.should.have.property('created_at');
             response.body.should.have.property('student_name_surname');
             response.body.should.have.property('parent_name_surname');
             response.body.should.have.property('address');
@@ -104,42 +111,31 @@ describe('Students', () => {
             done();
             console.log(response.body);
             if (error) {
-              console.log(error);
+              done(boom.badData(error));
             }
           });
         if (error) {
-          console.log(error);
+          done(boom.badData(error));
         }
       });
     });
   });
 
-  describe('/PUT/:id program', () => {
-    it('it should UPDATE an program by given id', (done) => {
-      let student = new StudentModel({
-        created_at: '2018-10-15T14:30:14.003Z',
-        student_name_surname: 'Name',
-        parent_name_surname: 'Surname',
-        address: 'Address 15',
-        telephone: '+37060000000',
-        email: 'email@email.com',
-        group: 'group',
-        identification_number: '11111111111',
-        teacher: 1
-      });
+  describe('/PUT/:id student', () => {
+    it('it should UPDATE an student by given id', (done) => {
       student.save((error, student) => {
         chai.request(app)
           .put('/students/' + student.id)
+          .set('token', CONFIG.TOKEN_TEST)
           .send({
-            created_at: '2018-10-10T14:30:14.003Z',
-            student_name_surname: 'Name',
-            parent_name_surname: 'Surname',
+            student_name_surname: 'Name Surname',
+            parent_name_surname: 'Name Surname',
             address: 'Address 10',
             telephone: '+37060000000',
             email: 'email@email.com',
             group: 'group',
             identification_number: '22222222222',
-            teacher: 2
+            teacher: mongoose.Types.ObjectId('51bb793aca2ab77a3200000d')
           })
           .end((error, response) => {
             response.should.have.status(200);
@@ -148,11 +144,11 @@ describe('Students', () => {
             done();
             console.log(response.body);
             if (error) {
-              console.log(error);
+              done(boom.badData(error));
             }
           });
         if (error) {
-          console.log(error);
+          done(boom.badData(error));
         }
       });
     });
@@ -160,20 +156,10 @@ describe('Students', () => {
 
   describe('/DELETE/:id student', () => {
     it('it should DELETE a student by given id', (done) => {
-      let student = new StudentModel({
-        created_at: '2018-10-15T14:30:14.003Z',
-        student_name_surname: 'Name',
-        parent_name_surname: 'Surname',
-        address: 'Address 15',
-        telephone: '+37060000000',
-        email: 'email@email.com',
-        group: 'group',
-        identification_number: '11111111111',
-        teacher: 1
-      });
       student.save((error, student) => {
         chai.request(app)
           .delete('/students/' + student.id)
+          .set('token', CONFIG.TOKEN_TEST)
           .end((error, response) => {
             response.should.have.status(200);
             response.body.should.be.a('object');
@@ -181,11 +167,11 @@ describe('Students', () => {
             done();
             console.log(response.body);
             if (error) {
-              console.log(error);
+              done(boom.badData(error));
             }
           });
         if (error) {
-          console.log(error);
+          done(boom.badData(error));
         }
       });
     });

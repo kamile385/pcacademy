@@ -4,7 +4,6 @@ const Schema = mongoose.Schema;
 const CONFIG = require('../config');
 
 let StudentSchema = new Schema({
-  created_at: { type: Date, default: Date.now, required: true },
   student_name_surname: { type: String, required: true, max: 100 },
   parent_name_surname: { type: String, required: true, max: 100 },
   address: { type: String, required: true, max: 100 },

@@ -4,7 +4,6 @@ const boom = require('boom');
 exports.create = async function (request, response, next) {
   try {
     let student = new Student({
-      created_at: request.body.created_at,
       student_name_surname: request.body.student_name_surname,
       parent_name_surname: request.body.parent_name_surname,
       address: request.body.address,

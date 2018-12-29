@@ -2,7 +2,7 @@ const express = require('express');
 const CONFIG = require('./config');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-// const passport = require('passport');
+const passport = require('passport');
 const handleError = require('./errorHandler');
 
 const student = require('./routes/student');
@@ -11,7 +11,6 @@ const attendance = require('./routes/attendance');
 const program = require('./routes/program');
 const group = require('./routes/group');
 const payment = require('./routes/payment');
-const user = require('./routes/user');
 
 require('./authentication/localStrategy');
 require('./authentication/jwtStrategy');
@@ -28,15 +27,12 @@ const app = express();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-// app.use('/students', passport.authenticate('jwt', { session: false }), student);
-// app.use('/teachers', passport.authenticate('jwt', { session: false }), teacher);
-app.use('/students', student);
 app.use('/teachers', teacher);
-app.use('/attendances', attendance);
-app.use('/programs', program);
-app.use('/groups', group);
-app.use('/payments', payment);
-app.use('/users', user);
+app.use('/students', passport.authenticate('jwt', { session: false }), student);
+app.use('/attendances', passport.authenticate('jwt', { session: false }), attendance);
+app.use('/programs', passport.authenticate('jwt', { session: false }), program);
+app.use('/groups', passport.authenticate('jwt', { session: false }), group);
+app.use('/payments', passport.authenticate('jwt', { session: false }), payment);
 
 app.use(handleError);
 

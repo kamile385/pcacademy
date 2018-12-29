@@ -5,27 +5,11 @@ const CONFIG = require('../config');
 const Teacher = require('../models/teacher');
 const boom = require('boom');
 
-// exports.create = async function (request, response, next) {
-//   try {
-//     let teacher = new Teacher({
-//       teacher_name_surname: request.body.teacher_name_surname,
-//       telephone: request.body.telephone,
-//       email: request.body.email,
-//       password: request.body.password
-//     });
-
-//     let result = await teacher.save();
-//     response.send(result);
-//   } catch (error) {
-//     next(boom.badData(error));
-//   }
-// };
-
 exports.signUp = async function (request, response, next) {
   try {
     response.json({
       message: 'Sign up successful',
-      teacher: request.teacher
+      user: request.user
     });
   } catch (error) {
     next(boom.badData(error));
@@ -33,18 +17,18 @@ exports.signUp = async function (request, response, next) {
 };
 
 exports.login = async function (request, response) {
-  passport.authenticate('login', async (error, teacher, info) => {
+  passport.authenticate('login', async (error, user, info) => {
     try {
-      if (error || !teacher) {
+      if (error || !user) {
         response.send(info);
       }
 
-      request.login(teacher, { session: false }, async (error) => {
+      request.login(user, { session: false }, async (error) => {
         if (error) {
           response.send(error);
         }
-        const body = { _id: teacher._id, email: teacher.email };
-        const token = jwt.sign({ teacher: body }, CONFIG.JWT_SECRET);
+        const body = { _id: user._id, email: user.email };
+        const token = jwt.sign({ user: body }, CONFIG.JWT_SECRET);
         response.json({ token });
       });
     } catch (err) {

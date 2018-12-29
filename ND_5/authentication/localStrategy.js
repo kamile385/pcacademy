@@ -6,17 +6,20 @@ const boom = require('boom');
 
 const signUpStrategy = new LocalStrategy({
   usernameField: 'email',
-  passwordField: 'password'
+  passwordField: 'password',
+  passReqToCallback: true
 }, createUser);
 
-async function createUser (teacher_name_surname, telephone, email, password, done) {
+async function createUser (req, email, password, done) {
   try {
-    const teacher = await TeacherModel.create({ teacher_name_surname, telephone, email, password });
-    done(null, teacher);
+    let teacher_name_surname = req.body.teacher_name_surname;
+    let telephone = req.body.telephone;
+    const user = await TeacherModel.create({ teacher_name_surname, telephone, email, password });
+    done(null, user);
   } catch (error) {
-    done(error);
+    done(boom.badData(error));
   }
-};
+}
 
 const loginStrategy = new LocalStrategy({
   usernameField: 'email',
@@ -35,7 +38,7 @@ async function loginUser (email, password, done) {
     }
     return done(null, user, { message: 'Logged in successfully' });
   } catch (error) {
-    done(error);
+    done(boom.badData(error));
   }
 }
 
