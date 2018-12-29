@@ -28,6 +28,20 @@ describe('Attendances', () => {
     });
   });
 
+  describe('/GET with unauthorized access', () => {
+    it('it should return unauthorized', done => {
+      chai.request(app)
+        .get('/attendances')
+        .end((error, response) => {
+          response.should.have.status(401);
+          done();
+          if (error) {
+            done(boom.badData(error));
+          }
+        });
+    });
+  });
+
   describe('/GET attendance', () => {
     it('it should get all attendances', done => {
       chai.request(app)
@@ -70,7 +84,6 @@ describe('Attendances', () => {
 
   describe('/GET/:id attendance', () => {
     it('it should GET an attendance by the given id', (done) => {
-      let attendance = new AttendanceModel({ date: '2018-12-03T00:00:02.003Z', status: '+', remark: '' });
       attendance.save((error, attendance) => {
         chai.request(app)
           .get('/attendances/' + attendance.id)
@@ -128,7 +141,12 @@ describe('Attendances', () => {
 
   describe('/DELETE/:id attendance', () => {
     it('it should DELETE a attendance by given id', (done) => {
-      let attendance = new AttendanceModel({ date: '2018-12-03T00:00:02.003Z', status: '+', remark: '' });
+      let attendance = new AttendanceModel({
+        date: '2018-12-03T00:00:02.003Z',
+        status: '+',
+        remark: '',
+        student: mongoose.Types.ObjectId('51bb793aca2ab77a3200000d')
+      });
       attendance.save((error, attendance) => {
         chai.request(app)
           .delete('/attendances/' + attendance.id)

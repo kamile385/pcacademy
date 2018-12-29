@@ -156,6 +156,16 @@ describe('Students', () => {
 
   describe('/DELETE/:id student', () => {
     it('it should DELETE a student by given id', (done) => {
+      let student = new StudentModel({
+        student_name_surname: 'Name Surname',
+        parent_name_surname: 'Name Surname',
+        address: 'Address 15',
+        telephone: '+37060000000',
+        email: 'email@email.com',
+        group: 'group',
+        identification_number: '11111111111',
+        teacher: mongoose.Types.ObjectId('51bb793aca2ab77a3200000d')
+      });
       student.save((error, student) => {
         chai.request(app)
           .delete('/students/' + student.id)

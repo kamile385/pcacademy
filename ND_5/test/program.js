@@ -11,6 +11,13 @@ var mongoose = require('mongoose');
 chai.should();
 chai.use(chaiHttp);
 
+let program = new ProgramModel({
+  name: 'Matematikos bičiuliai',
+  group_grade: '1',
+  description: '',
+  teacher: mongoose.Types.ObjectId('51bb793aca2ab77a3200000d')
+});
+
 describe('Programs', () => {
   beforeEach(done => {
     ProgramModel.remove({}, error => {
@@ -55,12 +62,6 @@ describe('Programs', () => {
 
   describe('/POST program', () => {
     it('it should post program', done => {
-      let program = new ProgramModel({
-        name: 'Matematikos bičiuliai',
-        group_grade: '1',
-        description: '',
-        teacher: mongoose.Types.ObjectId('51bb793aca2ab77a3200000d')
-      });
       chai.request(app)
         .post('/programs')
         .set('token', CONFIG.TOKEN_TEST)
@@ -71,7 +72,7 @@ describe('Programs', () => {
           response.body.should.have.property('name');
           response.body.should.have.property('group_grade');
           response.body.should.have.property('description');
-          // response.body.should.have.property('teacher');
+          response.body.should.have.property('teacher');
           done();
           console.log(response.body);
           if (error) {
@@ -83,12 +84,6 @@ describe('Programs', () => {
 
   describe('/GET/:id program', () => {
     it('it should GET an program by the given id', (done) => {
-      let program = new ProgramModel({
-        name: 'Matematikos bičiuliai',
-        group_grade: '1',
-        description: '',
-        teacher: mongoose.Types.ObjectId('51bb793aca2ab77a3200000d')
-      });
       program.save((error, program) => {
         chai.request(app)
           .get('/programs/' + program.id)
@@ -116,12 +111,6 @@ describe('Programs', () => {
 
   describe('/PUT/:id program', () => {
     it('it should UPDATE an program by given id', (done) => {
-      let program = new ProgramModel({
-        name: 'Matematikos bičiuliai',
-        group_grade: '1',
-        description: '',
-        teacher: mongoose.Types.ObjectId('51bb793aca2ab77a3200000d')
-      });
       program.save((error, program) => {
         chai.request(app)
           .put('/programs/' + program.id)

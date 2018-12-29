@@ -6,7 +6,8 @@ exports.create = async function (request, response, next) {
     let program = new Program({
       name: request.body.name,
       group_grade: request.body.group_grade,
-      description: request.body.description
+      description: request.body.description,
+      teacher: request.body.teacher
     });
 
     let result = await program.save();

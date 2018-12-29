@@ -67,6 +67,7 @@ describe('Payments', () => {
     it('it should post payment', done => {
       chai.request(app)
         .post('/payments')
+        .set('token', CONFIG.TOKEN_TEST)
         .send(payment)
         .end((error, response) => {
           response.should.have.status(200);
@@ -151,6 +152,15 @@ describe('Payments', () => {
 
   describe('/DELETE/:id payment', () => {
     it('it should DELETE a payment by given id', (done) => {
+      let payment = new PaymentModel({
+        month: 'September',
+        amount: 15,
+        state_financing: 15,
+        praise: 0,
+        not_first_year: 5,
+        second_program: 0,
+        student: mongoose.Types.ObjectId('51bb793aca2ab77a3200000d')
+      });
       payment.save((error, payment) => {
         chai.request(app)
           .delete('/payments/' + payment.id)

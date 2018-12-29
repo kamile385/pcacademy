@@ -148,6 +148,14 @@ describe('Groups', () => {
 
   describe('/DELETE/:id group', () => {
     it('it should DELETE a group by given id', (done) => {
+      let group = new GroupModel({
+        name: 'Kompiuterinis projektavimas',
+        group_grade: 9,
+        day_of_week: 'Ketvirtadienis',
+        time_from: '17:00',
+        time_to: '18:00',
+        program: mongoose.Types.ObjectId('51bb793aca2ab77a3200000d')
+      });
       group.save((error, group) => {
         chai.request(app)
           .delete('/groups/' + group.id)
