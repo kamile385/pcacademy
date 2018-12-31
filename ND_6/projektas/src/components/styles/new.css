@@ -1,0 +1,15 @@
+@media all and (min-width: 480px) {
+    .NewProgram {
+        padding: 60px 0;
+    }
+    .NewProgram form {
+        padding-bottom: 15px;
+        margin: 0 auto;
+        max-width: 320px;
+    }
+  
+    .NewProgram form textarea {
+        height: 300px;
+        font-size: 20px;
+    }
+}
