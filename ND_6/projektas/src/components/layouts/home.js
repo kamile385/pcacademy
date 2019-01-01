@@ -39,7 +39,7 @@ export default function Home() {
     <div className="col-sm">
         <div className="card border-warning mb-3">
         <a href="/payments">
-            <div className="card-body"><span className="glyphicon glyphicon-ok-circle"></span></div>
+            <div className="card-body"><span className="glyphicon glyphicon-credit-card"></span></div>
             <h5 className="card-title">Payments</h5>
         </a>
         </div>

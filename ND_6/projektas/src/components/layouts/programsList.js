@@ -8,7 +8,7 @@ export default class ProgramsList extends Component {
     return (
       <div className="List">
       <PageHeader>Programs</PageHeader>
-      <a class="btn btn-primary" href="programs/new" role="button">Add</a>
+      <a className="btn btn-primary" href="programs/new" role="button">Add</a>
         <Table responsive>
         <thead>
             <tr>
@@ -20,10 +20,11 @@ export default class ProgramsList extends Component {
         </thead>
         <tbody>
         {data.map((item) => (
-                <tr>
-                    {Object.keys(item).map(key => (
-                        <td>{item[key]}</td>
-                    ))}
+                <tr key={item.id}>
+                    <td><a href={`/programs/${item.id}`}>{item.id}</a></td>
+                    <td>{item.name}</td>
+                    <td>{item.group_grade}</td>
+                    <td>{item.description}</td>
                 </tr>
             ))}
         </tbody>

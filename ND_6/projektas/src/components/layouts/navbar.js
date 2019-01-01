@@ -17,9 +17,7 @@ function NavBar() {
           <a className="nav-link" href="/signup">Sign up</a>
         </li>
         <li className="nav-item dropdown">
-        <a className="nav-link dropdown-toggle" href="/" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Dropdown
-        </a>
+        <a className="nav-link dropdown-toggle" href="/" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">More</a>
         <div className="dropdown-menu" aria-labelledby="navbarDropdown">
           <a className="dropdown-item" href="/students">Students</a>
           <div className="dropdown-divider"></div>
