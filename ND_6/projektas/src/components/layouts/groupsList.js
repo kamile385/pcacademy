@@ -1,14 +1,41 @@
-import React, { Component } from "react";
-import { Table, PageHeader } from "react-bootstrap";
+import React from "react";
+import { Table, PageHeader, Button, Modal } from "react-bootstrap";
 import data from '../../MOCK_DATA_groups.json';
+import NewGroup from './newGroup';
 import "../styles/list.css";
 
-export default class GroupsList extends Component {
-  render() {
-    return (
+export default class GroupsList extends React.Component {
+    constructor(props, context) {
+        super(props, context);
+    
+        this.handleShow = this.handleShow.bind(this);
+        this.handleClose = this.handleClose.bind(this);
+    
+        this.state = {
+        show: false
+        };
+    }
+
+    handleClose() {
+        this.setState({ show: false });
+    }
+    
+    handleShow() {
+        this.setState({ show: true });
+    }
+    
+    render() {
+      return (
       <div className="List">
       <PageHeader>Groups</PageHeader>
-      <a class="btn btn-primary" href="groups/new" role="button">Add</a>
+      <Button bsStyle="primary" bsSize="large" onClick={this.handleShow}>Add</Button>
+        <Modal show={this.state.show} onHide={this.handleClose}>
+          <Modal.Header closeButton>
+          </Modal.Header>
+          <Modal.Body>
+            <NewGroup/>
+            </Modal.Body>
+        </Modal>
         <Table responsive>
         <thead>
             <tr>
@@ -22,10 +49,13 @@ export default class GroupsList extends Component {
         </thead>
         <tbody>
             {data.map((item) => (
-                <tr>
-                    {Object.keys(item).map(key => (
-                        <td>{item[key]}</td>
-                    ))}
+                <tr key={item.id}>
+                    <td><a href={`/groups/${item.id}`}>{item.id}</a></td>
+                    <td>{item.name}</td>
+                    <td>{item.group_grade}</td>
+                    <td>{item.day_of_week}</td>
+                    <td>{item.time_from}</td>
+                    <td>{item.time_to}</td>
                 </tr>
             ))}
         </tbody>

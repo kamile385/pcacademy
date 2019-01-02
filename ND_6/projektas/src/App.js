@@ -5,21 +5,25 @@ import Login from './components/layouts/login';
 import Signup from './components/layouts/signup';
 import Home from './components/layouts/home';
 
-import NewProgram from './components/layouts/newProgram';
 import ProgramsList from './components/layouts/programsList';
-import Programs from './components/layouts/programs';
+import ProgramsById from './components/layouts/programsById';
+import ProgramsEdit from './components/layouts/programsEdit';
 
-import NewAttendance from './components/layouts/newAttendance';
 import AttendancesList from './components/layouts/attendancesList';
+import AttendancesById from './components/layouts/attendancesById';
+import AttendancesEdit from './components/layouts/attendancesEdit';
 
-import NewPayment from './components/layouts/newPayment';
 import PaymentsList from './components/layouts/paymentsList';
+import PaymentsById from './components/layouts/paymentsById';
+import PaymentsEdit from './components/layouts/paymentsEdit';
 
-import NewStudent from './components/layouts/newStudent';
 import StudentsList from './components/layouts/studentsList';
+import StudentsById from './components/layouts/studentsById';
+import StudentsEdit from './components/layouts/studentsEdit';
 
-import NewGroup from './components/layouts/newGroup';
 import GroupsList from './components/layouts/groupsList';
+import GroupsById from './components/layouts/groupsById';
+import GroupsEdit from './components/layouts/groupsEdit';
 import './App.css';
 
 class App extends Component {
@@ -28,20 +32,29 @@ class App extends Component {
       <div>
         <NavBar/>
         <Route path="/" exact component={ Home } />
+        
         <Route path="/login" exact component={ Login } />
         <Route path="/signup" exact component={ Signup }/>
-        <Route path="/programs/new" exact component={ NewProgram }/>
+
         <Route path="/programs" exact component={ ProgramsList }/>
-        <Route path="/programs/:id" exact component={ Programs }/>
-        <Route path="/attendances/new" exact component={ NewAttendance }/>
+        <Route path="/programs/:id" exact component={ ProgramsById }/>
+        <Route path="/programs/:id/edit" exact component={ ProgramsEdit }/>
+        
         <Route path="/attendances" exact component={ AttendancesList }/>
-        <Route path="/payments/new" exact component={ NewPayment }/>
+        <Route path="/attendances/:id" exact component={ AttendancesById }/>
+        <Route path="/attendances/:id/edit" exact component={ AttendancesEdit }/>
+
         <Route path="/payments" exact component={ PaymentsList }/>
-        <Route path="/students/new" exact component={ NewStudent }/>
+        <Route path="/payments/:id" exact component={ PaymentsById }/>
+        <Route path="/payments/:id/edit" exact component={ PaymentsEdit }/>
+
         <Route path="/students" exact component={ StudentsList }/>
-        <Route path="/groups/new" exact component={ NewGroup }/>
+        <Route path="/students/:id" exact component={ StudentsById }/>
+        <Route path="/students/:id/edit" exact component={ StudentsEdit }/>
+
         <Route path="/groups" exact component={ GroupsList }/>
-        {/* <Route exact path='/question/:questionId' component={Question}/> */}
+        <Route path="/groups/:id" exact component={ GroupsById }/>
+        <Route path="/groups/:id/edit" exact component={ GroupsEdit }/>
       </div>
     );
   }
