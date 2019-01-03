@@ -1,0 +1,18 @@
+.card a:hover{
+    text-decoration: none;
+    color: darkgray;
+}
+
+.cardTitle{
+    color: black;
+    text-align: center;
+}
+
+.cardBody{
+    text-align: center;
+}
+
+.glyphicon {
+    font-size: 50px;
+    text-align: center;
+}
