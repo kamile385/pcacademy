@@ -31,9 +31,13 @@ export default function Attendances({ match }) {
         </tbody>
       </Table>
       {filteredData.map(item => (
-        <div>
-          <Link to={`/attendances/${item.id}/edit`}>Edit</Link>
-          <Link to="/attendances">Delete</Link>
+        <div key={item.id}>
+          <Link to={`/attendances/${item.id}/edit`}>
+            <button type="button">Edit</button>
+          </Link>
+          <Link to="/attendances">
+            <button type="button">Delete</button>
+          </Link>
         </div>
       ))}
     </div>

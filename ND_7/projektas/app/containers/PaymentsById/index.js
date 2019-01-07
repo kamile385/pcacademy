@@ -33,9 +33,13 @@ export default function Payments({ match }) {
         </tbody>
       </Table>
       {filteredData.map(item => (
-        <div>
-          <Link to={`/payments/${item.id}/edit`}>Edit</Link>
-          <Link to="/payments">Delete</Link>
+        <div key={item.id}>
+          <Link to={`/payments/${item.id}/edit`}>
+            <button type="button">Edit</button>
+          </Link>
+          <Link to="/payments">
+            <button type="button">Delete</button>
+          </Link>
         </div>
       ))}
     </div>

@@ -8,20 +8,20 @@ import NavBar from 'containers/NavBar';
 import SignupPage from 'containers/SignupPage/Loadable';
 // import ListPage from 'containers/ListPage';
 import LoginPage from 'containers/LoginPage/Loadable';
-import AttendancesList from 'containers/AttendancesList';
-import AttendancesById from 'containers/AttendancesById';
+import AttendancesList from 'containers/AttendancesList/Loadable';
+import AttendancesById from 'containers/AttendancesById/Loadable';
 
-import GroupsList from 'containers/GroupsList';
-import GroupsById from 'containers/GroupsById';
+import GroupsList from 'containers/GroupsList/Loadable';
+import GroupsById from 'containers/GroupsById/Loadable';
 
-import StudentsList from 'containers/StudentsList';
-import StudentsById from 'containers/StudentsById';
+import StudentsList from 'containers/StudentsList/Loadable';
+import StudentsById from 'containers/StudentsById/Loadable';
 
-import PaymentsList from 'containers/PaymentsList';
-import PaymentsById from 'containers/PaymentsById';
+import PaymentsList from 'containers/PaymentsList/Loadable';
+import PaymentsById from 'containers/PaymentsById/Loadable';
 
-import ProgramsList from 'containers/ProgramsList';
-import ProgramsById from 'containers/ProgramsById';
+import ProgramsList from 'containers/ProgramsList/Loadable';
+import ProgramsById from 'containers/ProgramsById/Loadable';
 
 import GlobalStyle from '../../global-styles';
 

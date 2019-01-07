@@ -32,9 +32,13 @@ export default function Groups({ match }) {
         </tbody>
       </Table>
       {filteredData.map(item => (
-        <div>
-          <Link to={`/groups/${item.id}/edit`}>Edit</Link>
-          <Link to="/groups">Delete</Link>
+        <div key={item.id}>
+          <Link to={`/groups/${item.id}/edit`}>
+            <button type="button">Edit</button>
+          </Link>
+          <Link to="/groups">
+            <button type="button">Delete</button>
+          </Link>
         </div>
       ))}
     </div>

@@ -34,9 +34,13 @@ export default function Students({ match }) {
         </tbody>
       </Table>
       {filteredData.map(item => (
-        <div>
-          <Link to={`/students/${item.id}/edit`}>Edit</Link>
-          <Link to="/students">Delete</Link>
+        <div key={item.id}>
+          <Link to={`/students/${item.id}/edit`}>
+            <button type="button">Edit</button>
+          </Link>
+          <Link to="/students">
+            <button type="button">Delete</button>
+          </Link>
         </div>
       ))}
     </div>
