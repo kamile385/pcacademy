@@ -54,7 +54,7 @@ export default class PaymentsList extends React.Component {
             {data.map(item => (
               <tr key={item.id}>
                 <td>
-                  <a href={`/payments/${item.id}`}>{item.id}</a>
+                  <Link to={`/payments/${item.id}`}>{item.id}</Link>
                 </td>
                 <td>{item.month}</td>
                 <td>{item.amount}</td>

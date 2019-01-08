@@ -1,5 +1,5 @@
 import React from 'react';
-import Link from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Table, PageHeader, Button, Modal } from 'react-bootstrap';
 import data from '../../MOCK_DATA_programs.json';
 import ProgramsNew from '../ProgramsNew';
@@ -51,7 +51,7 @@ export default class ProgramsList extends React.Component {
             {data.map(item => (
               <tr key={item.id}>
                 <td>
-                  <a href={`/programs/${item.id}`}>{item.id}</a>
+                  <Link to={`/programs/${item.id}`}>{item.id}</Link>
                 </td>
                 <td>{item.name}</td>
                 <td>{item.group_grade}</td>

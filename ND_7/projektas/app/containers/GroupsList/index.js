@@ -1,5 +1,6 @@
 import React from 'react';
 import { Table, PageHeader, Button, Modal } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import GroupsNew from 'containers/GroupsNew';
 import Style from './style.css';
 import data from '../../MOCK_DATA_groups.json';
@@ -52,7 +53,7 @@ export default class GroupsList extends React.Component {
             {data.map(item => (
               <tr key={item.id}>
                 <td>
-                  <a href={`/groups/${item.id}`}>{item.id}</a>
+                  <Link to={`/groups/${item.id}`}>{item.id}</Link>
                 </td>
                 <td>{item.name}</td>
                 <td>{item.group_grade}</td>

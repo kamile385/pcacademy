@@ -1,12 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Table } from 'react-bootstrap';
+import PropTypes from 'prop-types';
 import data from '../../MOCK_DATA_payments.json';
 
 export default function Payments({ match }) {
   const paymentId = match.params.id;
 
-  const filteredData = data.filter(d => d.id == paymentId);
+  const filteredData = data.filter(d => JSON.stringify(d.id) === paymentId);
 
   return (
     <div>
@@ -45,3 +46,10 @@ export default function Payments({ match }) {
     </div>
   );
 }
+Payments.propTypes = {
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      id: PropTypes.string,
+    }),
+  }),
+};

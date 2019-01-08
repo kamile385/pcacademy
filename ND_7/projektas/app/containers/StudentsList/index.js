@@ -1,5 +1,6 @@
 import React from 'react';
 import { Table, PageHeader, Button, Modal } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import StudentsNew from 'containers/StudentsNew';
 import data from '../../MOCK_DATA_students.json';
 import Style from './style.css';
@@ -54,7 +55,7 @@ export default class StudentsList extends React.Component {
             {data.map(item => (
               <tr key={item.id}>
                 <td>
-                  <a href={`/students/${item.id}`}>{item.id}</a>
+                  <Link to={`/students/${item.id}`}>{item.id}</Link>
                 </td>
                 <td>{item.student_name_surname}</td>
                 <td>{item.parent_name_surname}</td>

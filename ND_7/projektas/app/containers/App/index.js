@@ -4,7 +4,6 @@ import { Switch, Route } from 'react-router-dom';
 import HomePage from 'containers/HomePage/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
 import NavBar from 'containers/NavBar';
-// import Try from 'containers/NavBar/try.js';
 import SignupPage from 'containers/SignupPage/Loadable';
 // import ListPage from 'containers/ListPage';
 import LoginPage from 'containers/LoginPage/Loadable';

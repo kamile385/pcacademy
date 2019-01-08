@@ -1,12 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Table } from 'react-bootstrap';
+import PropTypes from 'prop-types';
 import data from '../../MOCK_DATA_groups.json';
 
 export default function Groups({ match }) {
   const groupId = match.params.id;
 
-  const filteredData = data.filter(d => d.id == groupId);
+  const filteredData = data.filter(d => JSON.stringify(d.id) === groupId);
 
   return (
     <div>
@@ -44,3 +45,10 @@ export default function Groups({ match }) {
     </div>
   );
 }
+Groups.propTypes = {
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      id: PropTypes.string,
+    }),
+  }),
+};

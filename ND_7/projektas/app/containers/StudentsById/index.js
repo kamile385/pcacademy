@@ -1,12 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Table } from 'react-bootstrap';
+import PropTypes from 'prop-types';
 import data from '../../MOCK_DATA_students.json';
 
 export default function Students({ match }) {
   const studentId = match.params.id;
 
-  const filteredData = data.filter(d => d.id == studentId);
+  const filteredData = data.filter(d => JSON.stringify(d.id) === studentId);
 
   return (
     <div>
@@ -46,3 +47,10 @@ export default function Students({ match }) {
     </div>
   );
 }
+Students.propTypes = {
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      id: PropTypes.string,
+    }),
+  }),
+};

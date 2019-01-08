@@ -1,5 +1,5 @@
 import React from 'react';
-import { Table, PageHeader, Button, Modal } from 'react-bootstrap';]
+import { Table, PageHeader, Button, Modal } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import Style from './style.css';
 
@@ -33,13 +33,9 @@ export default class List extends React.Component {
         </Button>
         <Modal show={this.state.show} onHide={this.handleClose}>
           <Modal.Header closeButton />
-          <Modal.Body>
-            {add}
-          </Modal.Body>
+          <Modal.Body>{add}</Modal.Body>
         </Modal>
-        <Table responsive>
-          {children}
-        </Table>
+        <Table responsive>{children}</Table>
       </div>
     );
   }

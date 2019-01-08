@@ -1,5 +1,6 @@
 import React from 'react';
 import { Table, PageHeader, Button, Modal } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import AttendanceNew from 'containers/AttendanceNew';
 import data from '../../MOCK_DATA_attendances.json';
 import Style from './style.css';
@@ -50,7 +51,7 @@ export default class AttendancesList extends React.Component {
             {data.map(item => (
               <tr key={item.id}>
                 <td>
-                  <a href={`/attendances/${item.id}`}>{item.id}</a>
+                  <Link to={`/attendances/${item.id}`}>{item.id}</Link>
                 </td>
                 <td>{item.date}</td>
                 <td>{item.status}</td>
