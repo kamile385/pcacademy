@@ -5,7 +5,7 @@ import HomePage from 'containers/HomePage/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
 import NavBar from 'containers/NavBar';
 import SignupPage from 'containers/SignupPage/Loadable';
-// import ListPage from 'containers/ListPage';
+import ListPage from 'containers/ListPage';
 import LoginPage from 'containers/LoginPage/Loadable';
 import AttendancesList from 'containers/AttendancesList/Loadable';
 import AttendancesById from 'containers/AttendancesById/Loadable';
@@ -15,6 +15,7 @@ import GroupsById from 'containers/GroupsById/Loadable';
 
 import StudentsList from 'containers/StudentsList/Loadable';
 import StudentsById from 'containers/StudentsById/Loadable';
+import StudentsNew from 'containers/StudentsNew';
 
 import PaymentsList from 'containers/PaymentsList/Loadable';
 import PaymentsById from 'containers/PaymentsById/Loadable';
@@ -32,15 +33,16 @@ export default function App() {
         <Route exact path="/" component={HomePage} />
         <Route exact path="/login" component={LoginPage} />
         <Route exact path="/signup" component={SignupPage} />
-        {/* <Route exact path="/list" component={ListPage} /> */}
+        <Route exact path="/list" component={ListPage} />
         <Route exact path="/attendances" component={AttendancesList} />
         <Route exact path="/attendances/:id" component={AttendancesById} />
 
         <Route exact path="/groups" component={GroupsList} />
         <Route exact path="/groups/:id" component={GroupsById} />
 
-        <Route exact path="/students" component={StudentsList} />
-        <Route exact path="/students/:id" component={StudentsById} />
+        {/* <Route exact path="/students" component={StudentsList} /> */}
+        {/* <Route exact path="/students/:id" component={StudentsById} /> */}
+        <Route exact path="/students/add" component={StudentsNew} />
 
         <Route exact path="/payments" component={PaymentsList} />
         <Route exact path="/payments/:id" component={PaymentsById} />

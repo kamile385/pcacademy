@@ -1,113 +1,96 @@
 import React, { Component } from 'react';
-import { Button, FormGroup, FormControl, ControlLabel } from 'react-bootstrap';
-import Style from './style.css';
+import TextInputGroup from './TextInputGroup';
 
-export default class NewStudent extends Component {
-  constructor(props) {
-    super(props);
+export default class StudentsNew extends Component {
+  state = {
+    name: '',
+    email: '',
+    phone: '',
+    errors: {},
+  };
 
-    this.state = {
-      student_name_surname: '',
-      parent_name_surname: '',
-      address: '',
-      telephone: '',
-      email: '',
-      group: '',
-      identification_number: '',
+  onSubmit = e => {
+    e.preventDefault();
+
+    const { name, email, phone } = this.state;
+
+    // Check For Errors
+    if (name === '') {
+      this.setState({ errors: { name: 'Name is required' } });
+      return;
+    }
+
+    if (email === '') {
+      this.setState({ errors: { email: 'Email is required' } });
+      return;
+    }
+
+    if (phone === '') {
+      this.setState({ errors: { phone: 'Phone is required' } });
+      return;
+    }
+
+    const newContact = {
+      name,
+      email,
+      phone,
     };
-  }
 
-  validateForm() {
-    return (
-      (this.state.student_name_surname.length &&
-        this.state.parent_name_surname.length &&
-        this.state.address.length &&
-        this.state.telephone.length &&
-        this.state.email.length &&
-        this.state.group.length &&
-        this.state.identification_number.length) > 0
-    );
-  }
+    // // SUBMIT CONTACT ////
 
-  handleChange = event => {
+    // Clear State
     this.setState({
-      [event.target.id]: event.target.value,
+      name: '',
+      email: '',
+      phone: '',
+      errors: {},
     });
+
+    this.props.history.push('/');
   };
 
-  handleSubmit = async event => {
-    event.preventDefault();
-  };
+  onChange = e => this.setState({ [e.target.name]: e.target.value });
 
   render() {
+    const { name, email, phone, errors } = this.state;
+
     return (
-      <div className="NewProgram">
-        <form onSubmit={this.handleSubmit}>
-          <FormGroup controlId="student_name_surname" bsSize="large">
-            <ControlLabel>Student name surname</ControlLabel>
-            <FormControl
-              value={this.state.student_name_surname}
-              onChange={this.handleChange}
-              type="text"
+      <div className="card mb-3">
+        <div className="card-header">Add Contact</div>
+        <div className="card-body">
+          <form onSubmit={this.onSubmit}>
+            <TextInputGroup
+              label="Name"
+              name="name"
+              placeholder="Enter Name"
+              value={name}
+              onChange={this.onChange}
+              error={errors.name}
             />
-          </FormGroup>
-          <FormGroup controlId="parent_name_surname" bsSize="large">
-            <ControlLabel>Parent name surname</ControlLabel>
-            <FormControl
-              value={this.state.parent_name_surname}
-              onChange={this.handleChange}
-              type="text"
+            <TextInputGroup
+              label="Email"
+              name="email"
+              type="email"
+              placeholder="Enter Email"
+              value={email}
+              onChange={this.onChange}
+              error={errors.email}
             />
-          </FormGroup>
-          <FormGroup controlId="address">
-            <ControlLabel>Address</ControlLabel>
-            <FormControl
-              value={this.state.address}
-              onChange={this.handleChange}
-              type="text"
+            <TextInputGroup
+              label="Phone"
+              name="phone"
+              placeholder="Enter Phone"
+              value={phone}
+              onChange={this.onChange}
+              error={errors.phone}
             />
-          </FormGroup>
-          <FormGroup controlId="telephone">
-            <ControlLabel>Telephone</ControlLabel>
-            <FormControl
-              value={this.state.telephone}
-              onChange={this.handleChange}
-              type="text"
+            <input
+              type="submit"
+              value="Add Contact"
+              className="btn btn-light btn-block"
             />
-          </FormGroup>
-          <FormGroup controlId="email">
-            <ControlLabel>Email</ControlLabel>
-            <FormControl
-              value={this.state.email}
-              onChange={this.handleChange}
-              type="text"
-            />
-          </FormGroup>
-          <FormGroup controlId="group">
-            <ControlLabel>Group</ControlLabel>
-            <FormControl
-              value={this.state.group}
-              onChange={this.handleChange}
-              type="text"
-            />
-          </FormGroup>
-          <FormGroup controlId="identification_number">
-            <ControlLabel>Identification number</ControlLabel>
-            <FormControl
-              value={this.state.identification_number}
-              onChange={this.handleChange}
-              type="text"
-            />
-          </FormGroup>
-          <Button
-            block
-            bsSize="large"
-            disabled={!this.validateForm()}
-            type="submit"
-          >
-            Create
-          </Button>
-        </form>
+          </form>
+        </div>
       </div>
     );
   }
