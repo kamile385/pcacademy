@@ -14,7 +14,7 @@ import GroupsList from 'containers/GroupsList/Loadable';
 import GroupsById from 'containers/GroupsById/Loadable';
 
 import StudentsList from 'containers/StudentsList/Loadable';
-import StudentsById from 'containers/StudentsById/Loadable';
+// import StudentsById from 'containers/StudentsById/Loadable';
 import StudentsNew from 'containers/StudentsNew';
 
 import PaymentsList from 'containers/PaymentsList/Loadable';
@@ -29,29 +29,31 @@ export default function App() {
   return (
     <div>
       <NavBar />
-      <Switch>
-        <Route exact path="/" component={HomePage} />
-        <Route exact path="/login" component={LoginPage} />
-        <Route exact path="/signup" component={SignupPage} />
-        <Route exact path="/list" component={ListPage} />
-        <Route exact path="/attendances" component={AttendancesList} />
-        <Route exact path="/attendances/:id" component={AttendancesById} />
+      <div className="container">
+        <Switch>
+          <Route exact path="/" component={HomePage} />
+          <Route exact path="/login" component={LoginPage} />
+          <Route exact path="/signup" component={SignupPage} />
+          <Route exact path="/list" component={ListPage} />
+          <Route exact path="/attendances" component={AttendancesList} />
+          <Route exact path="/attendances/:id" component={AttendancesById} />
 
-        <Route exact path="/groups" component={GroupsList} />
-        <Route exact path="/groups/:id" component={GroupsById} />
+          <Route exact path="/groups" component={GroupsList} />
+          <Route exact path="/groups/:id" component={GroupsById} />
 
-        {/* <Route exact path="/students" component={StudentsList} /> */}
-        {/* <Route exact path="/students/:id" component={StudentsById} /> */}
-        <Route exact path="/students/add" component={StudentsNew} />
+          <Route exact path="/students" component={StudentsList} />
+          {/* <Route exact path="/students/:id" component={StudentsById} /> */}
+          <Route exact path="/students/add" component={StudentsNew} />
 
-        <Route exact path="/payments" component={PaymentsList} />
-        <Route exact path="/payments/:id" component={PaymentsById} />
+          <Route exact path="/payments" component={PaymentsList} />
+          <Route exact path="/payments/:id" component={PaymentsById} />
 
-        <Route exact path="/programs" component={ProgramsList} />
-        <Route exact path="/programs/:id" component={ProgramsById} />
-        <Route component={NotFoundPage} />
-      </Switch>
-      <GlobalStyle />
+          <Route exact path="/programs" component={ProgramsList} />
+          <Route exact path="/programs/:id" component={ProgramsById} />
+          <Route component={NotFoundPage} />
+        </Switch>
+        <GlobalStyle />
+      </div>
     </div>
   );
 }

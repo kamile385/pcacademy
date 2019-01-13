@@ -1,7 +1,10 @@
 import React from 'react';
 export default function NavBar() {
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+    <nav
+      className="navbar navbar-expand-lg navbar-dark fixed-top"
+      style={{ backgroundColor: '#000024' }}
+    >
       <a className="navbar-brand" href="/">
         Student management system
       </a>

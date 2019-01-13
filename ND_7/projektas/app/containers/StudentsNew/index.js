@@ -3,20 +3,53 @@ import TextInputGroup from './TextInputGroup';
 
 export default class StudentsNew extends Component {
   state = {
-    name: '',
+    student_name_surname: '',
+    parent_name_surname: '',
+    address: '',
+    telephone: '',
     email: '',
-    phone: '',
+    group: '',
+    identification_number: '',
     errors: {},
   };
 
   onSubmit = e => {
     e.preventDefault();
 
-    const { name, email, phone } = this.state;
+    const {
+      student_name_surname,
+      parent_name_surname,
+      address,
+      telephone,
+      email,
+      group,
+      identification_number,
+    } = this.state;
 
     // Check For Errors
-    if (name === '') {
-      this.setState({ errors: { name: 'Name is required' } });
+    if (student_name_surname === '') {
+      this.setState({
+        errors: {
+          student_name_surname: 'Student name and surname is required',
+        },
+      });
+      return;
+    }
+
+    if (parent_name_surname === '') {
+      this.setState({
+        errors: { parent_name_surname: 'Parent name and surname is required' },
+      });
+      return;
+    }
+
+    if (address === '') {
+      this.setState({ errors: { address: 'Address is required' } });
+      return;
+    }
+
+    if (telephone === '') {
+      this.setState({ errors: { telephone: 'Telephone is required' } });
       return;
     }
 
@@ -25,68 +58,122 @@ export default class StudentsNew extends Component {
       return;
     }
 
-    if (phone === '') {
-      this.setState({ errors: { phone: 'Phone is required' } });
+    if (group === '') {
+      this.setState({ errors: { group: 'Group is required' } });
       return;
     }
 
-    const newContact = {
-      name,
-      email,
-      phone,
-    };
+    if (identification_number === '') {
+      this.setState({
+        errors: { identification_number: 'Identification no is required' },
+      });
+      return;
+    }
 
-    // // SUBMIT CONTACT ////
+    const newStudent = {
+      student_name_surname,
+      parent_name_surname,
+      address,
+      telephone,
+      email,
+      group,
+      identification_number,
+    };
 
     // Clear State
     this.setState({
-      name: '',
+      student_name_surname: '',
+      parent_name_surname: '',
+      address: '',
+      telephone: '',
       email: '',
-      phone: '',
+      group: '',
+      identification_number: '',
       errors: {},
     });
 
-    this.props.history.push('/');
+    this.props.history.push('/students');
   };
 
   onChange = e => this.setState({ [e.target.name]: e.target.value });
 
   render() {
-    const { name, email, phone, errors } = this.state;
+    const {
+      student_name_surname,
+      parent_name_surname,
+      address,
+      telephone,
+      email,
+      group,
+      identification_number,
+      errors,
+    } = this.state;
 
     return (
       <div className="card mb-3">
-        <div className="card-header">Add Contact</div>
+        <div className="card-header">Add Student</div>
         <div className="card-body">
           <form onSubmit={this.onSubmit}>
             <TextInputGroup
-              label="Name"
-              name="name"
-              placeholder="Enter Name"
-              value={name}
+              label="Student full name"
+              name="student_name_surname"
+              placeholder="Enter student full name"
+              value={student_name_surname}
               onChange={this.onChange}
-              error={errors.name}
+              error={errors.student_name_surname}
+            />
+            <TextInputGroup
+              label="Parent full name"
+              name="parent_name_surname"
+              placeholder="Enter parent full name"
+              value={parent_name_surname}
+              onChange={this.onChange}
+              error={errors.parent_name_surname}
+            />
+            <TextInputGroup
+              label="Address"
+              name="address"
+              placeholder="Enter address"
+              value={address}
+              onChange={this.onChange}
+              error={errors.address}
+            />
+            <TextInputGroup
+              label="Telephone"
+              name="telephone"
+              placeholder="Enter phone number"
+              value={telephone}
+              onChange={this.onChange}
+              error={errors.telephone}
             />
             <TextInputGroup
               label="Email"
               name="email"
               type="email"
-              placeholder="Enter Email"
+              placeholder="Enter email"
               value={email}
               onChange={this.onChange}
               error={errors.email}
             />
             <TextInputGroup
-              label="Phone"
-              name="phone"
-              placeholder="Enter Phone"
-              value={phone}
+              label="Group"
+              name="group"
+              placeholder="Enter group"
+              value={group}
               onChange={this.onChange}
-              error={errors.phone}
+              error={errors.group}
+            />
+            <TextInputGroup
+              label="Identification number"
+              name="identification_number"
+              placeholder="Enter identification no"
+              value={identification_number}
+              onChange={this.onChange}
+              error={errors.identification_number}
             />
             <input
               type="submit"
-              value="Add Contact"
+              value="Add Student"
               className="btn btn-light btn-block"
             />
           </form>

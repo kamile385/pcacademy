@@ -36,7 +36,7 @@ export default class Student extends Component {
             style={{ cursor: 'pointer' }}
           />
           <i
-            className="fas fa-times"
+            className="fas fa-trash"
             style={{ cursor: 'pointer', float: 'right', color: 'red' }}
             onClick={this.onDeleteClick.bind(this, id)}
           />
