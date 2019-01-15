@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import TextInputGroup from './TextInputGroup';
+import TextInputGroup from '../layout/TextInputGroup';
 
-export default class StudentsNew extends Component {
+export default class EditStudent extends Component {
   state = {
     student_name_surname: '',
     parent_name_surname: '',
@@ -26,7 +26,6 @@ export default class StudentsNew extends Component {
       identification_number,
     } = this.state;
 
-    // Check For Errors
     if (student_name_surname === '') {
       this.setState({
         errors: {
@@ -70,7 +69,7 @@ export default class StudentsNew extends Component {
       return;
     }
 
-    const newStudent = {
+    const updContact = {
       student_name_surname,
       parent_name_surname,
       address,
@@ -79,6 +78,10 @@ export default class StudentsNew extends Component {
       group,
       identification_number,
     };
+
+    const { id } = this.props.match.params;
+
+    // // UPDATE CONTACT ////
 
     // Clear State
     this.setState({
@@ -111,7 +114,7 @@ export default class StudentsNew extends Component {
 
     return (
       <div className="card mb-3">
-        <div className="card-header">Add Student</div>
+        <div className="card-header">Edit Contact</div>
         <div className="card-body">
           <form onSubmit={this.onSubmit}>
             <TextInputGroup
@@ -173,7 +176,7 @@ export default class StudentsNew extends Component {
             />
             <input
               type="submit"
-              value="Add Student"
+              value="Update Student"
               className="btn btn-dark btn-block"
             />
           </form>
