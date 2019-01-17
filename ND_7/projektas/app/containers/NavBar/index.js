@@ -1,13 +1,15 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+
 export default function NavBar() {
   return (
     <nav
       className="navbar navbar-expand-lg navbar-dark fixed-top"
       style={{ backgroundColor: '#000024' }}
     >
-      <a className="navbar-brand" href="/">
+      <Link className="navbar-brand" to="/">
         Student management system
-      </a>
+      </Link>
       <button
         className="navbar-toggler"
         type="button"
@@ -23,20 +25,20 @@ export default function NavBar() {
       <div className="collapse navbar-collapse" id="navbarSupportedContent">
         <ul className="navbar-nav mr-auto">
           <li className="nav-item active">
-            <a className="nav-link" href="/login">
+            <Link className="nav-link" to="/login">
               Login
               <span className="sr-only">(current)</span>
-            </a>
+            </Link>
           </li>
           <li className="nav-item">
-            <a className="nav-link" href="/signup">
+            <Link className="nav-link" to="/signup">
               Sign up
-            </a>
+            </Link>
           </li>
           <li className="nav-item dropdown">
-            <a
+            <Link
               className="nav-link dropdown-toggle"
-              href="/"
+              to="/"
               id="navbarDropdown"
               role="button"
               data-toggle="dropdown"
@@ -44,24 +46,24 @@ export default function NavBar() {
               aria-expanded="false"
             >
               More
-            </a>
+            </Link>
             <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a className="dropdown-item" href="/students">
+              <Link className="dropdown-item" to="/students">
                 Students
-              </a>
+              </Link>
               <div className="dropdown-divider" />
-              <a className="dropdown-item" href="/programs">
+              <Link className="dropdown-item" to="/programs">
                 Programs
-              </a>
-              <a className="dropdown-item" href="/groups">
+              </Link>
+              <Link className="dropdown-item" to="/groups">
                 Groups
-              </a>
-              <a className="dropdown-item" href="/attendances">
+              </Link>
+              <Link className="dropdown-item" to="/attendances">
                 Attendance
-              </a>
-              <a className="dropdown-item" href="/payments">
+              </Link>
+              <Link className="dropdown-item" to="/payments">
                 Payments
-              </a>
+              </Link>
             </div>
           </li>
         </ul>
