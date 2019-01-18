@@ -1,7 +1,18 @@
 import React, { Component } from 'react';
-import TextInputGroup from './TextInputGroup';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
+import { compose } from 'redux';
 
-export default class StudentsNew extends Component {
+import injectSaga from 'utils/injectSaga';
+import injectReducer from 'utils/injectReducer';
+import TextInputGroup from './TextInputGroup';
+import makeSelectStudentsNew from './selectors';
+import reducer from './reducer';
+import saga from './saga';
+import { getStudents } from './actions';
+
+export class StudentsNew extends Component {
   state = {
     student_name_surname: '',
     parent_name_surname: '',
@@ -182,3 +193,27 @@ export default class StudentsNew extends Component {
     );
   }
 }
+
+const mapStateToProps = createStructuredSelector({
+  studentsNew: makeSelectStudentsNew(),
+});
+
+function mapDispatchToProps(dispatch) {
+  return {
+    getStudents: () => dispatch(getStudents()),
+  };
+}
+
+const withConnect = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+);
+
+const withReducer = injectReducer({ key: 'studentsNew', reducer });
+const withSaga = injectSaga({ key: 'studentsNew', saga });
+
+export default compose(
+  withReducer,
+  withSaga,
+  withConnect,
+)(StudentsNew);
