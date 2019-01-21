@@ -1,27 +1,27 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 
-import HomePage from 'containers/HomePage/Loadable';
-import NotFoundPage from 'containers/NotFoundPage/Loadable';
-import NavBar from 'containers/NavBar';
-import SignupPage from 'containers/SignupPage/Loadable';
-import ListPage from 'containers/ListPage';
-import LoginPage from 'containers/LoginPage/Loadable';
-import AttendancesList from 'containers/AttendancesList/Loadable';
-import AttendancesById from 'containers/AttendancesById/Loadable';
+import NotFoundPage from '../NotFoundPage/Loadable';
+import NavBar from '../NavBar';
+import HomePage from '../HomePage/Loadable';
+import SignupPage from '../SignUpPage/Loadable';
+import ListPage from '../ListPage';
+import LoginPage from '../LoginPage/Loadable';
+import AttendancesList from '../AttendancesList/Loadable';
+import AttendancesById from '../AttendancesById/Loadable';
 
-import GroupsList from 'containers/GroupsList/Loadable';
-import GroupsById from 'containers/GroupsById/Loadable';
+import GroupsList from '../GroupsList/Loadable';
+import GroupsById from '../GroupsById/Loadable';
 
-import StudentsList from 'containers/StudentsList/Loadable';
-// import StudentsById from 'containers/StudentsById/Loadable';
-import StudentsNew from 'containers/StudentsNew';
+import StudentsList from '../StudentsList/Loadable';
+// import StudentsById from '../StudentsById/Loadable';
+import StudentsNew from '../StudentsNew/Loadable';
 
-import PaymentsList from 'containers/PaymentsList/Loadable';
-import PaymentsById from 'containers/PaymentsById/Loadable';
+import PaymentsList from '../PaymentsList/Loadable';
+import PaymentsById from '../PaymentsById/Loadable';
 
-import ProgramsList from 'containers/ProgramsList/Loadable';
-import ProgramsById from 'containers/ProgramsById/Loadable';
+import ProgramsList from '../ProgramsList/Loadable';
+import ProgramsById from '../ProgramsById/Loadable';
 
 import GlobalStyle from '../../global-styles';
 
