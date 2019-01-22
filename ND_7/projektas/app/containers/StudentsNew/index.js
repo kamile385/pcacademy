@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 
 import injectSaga from 'utils/injectSaga';
@@ -10,13 +9,18 @@ import TextInputGroup from './TextInputGroup';
 import makeSelectStudentsNew from './selectors';
 import reducer from './reducer';
 import saga from './saga';
-import { getStudents } from './actions';
+import { getStudents, createStudent } from './actions';
+import StudentFrom from '../../components/Forms/newStudent';
 
 export class StudentsNew extends React.Component {
   componentDidMount() {
-    // console.log(this.props);
+    console.log(this.props);
     this.props.getStudents();
   }
+
+  submit = data => {
+    this.props.createStudent(data);
+  };
 
   // state = {
   //   student_name_surname: '',
@@ -114,8 +118,12 @@ export class StudentsNew extends React.Component {
   // onChange = e => this.setState({ [e.target.name]: e.target.value });
 
   render() {
-    return <div>Students!</div>;
-
+    const { students } = this.props;
+    return (
+      <div>
+        <StudentFrom onSubmit={this.submit} />
+      </div>
+    );
     // const {
     //   student_name_surname,
     //   parent_name_surname,
@@ -201,16 +209,17 @@ export class StudentsNew extends React.Component {
 }
 
 StudentsNew.propTypes = {
-  getStudents: PropTypes.func.isRequired,
+  getStudents: PropTypes.func,
+  students: PropTypes.array,
+  createStudent: PropTypes.func,
 };
 
-const mapStateToProps = createStructuredSelector({
-  studentsNew: makeSelectStudentsNew(),
-});
+const mapStateToProps = makeSelectStudentsNew();
 
 function mapDispatchToProps(dispatch) {
   return {
     getStudents: () => dispatch(getStudents()),
+    createStudent: data => dispatch(createStudent(data)),
   };
 }
 

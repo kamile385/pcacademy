@@ -1,3 +1,5 @@
 export default {
-  GET_STUDENTS: '/students',
+  STUDENTS: {
+    BASE: '/students/',
+  },
 };

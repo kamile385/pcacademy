@@ -5,7 +5,7 @@ const initialState = fromJS({
   students: [],
 });
 
-export default function studentsReducer(state = initialState, action) {
+export default function studentsNewReducer(state = initialState, action) {
   switch (action.type) {
     case SET_STUDENTS:
       return state.set('students', action.students);
