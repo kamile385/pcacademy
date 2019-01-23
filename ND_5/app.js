@@ -25,6 +25,12 @@ mongoose.Promise = global.Promise;
 
 const app = express();
 
+app.use(function(req, res, next){
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Authorization");
+  next();
+})
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use('/teachers', teacher);
@@ -38,8 +44,8 @@ app.use('/payments', payment);
 
 app.use(handleError);
 
-app.listen(CONFIG.PORT, () => {
-  console.log('Server started!');
+const listener = app.listen(CONFIG.PORT, () => {
+  console.log(`Server started! listening on port: ${listener.address().port}`);
 });
 
 module.exports = app;
