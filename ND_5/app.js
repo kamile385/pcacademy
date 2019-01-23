@@ -28,11 +28,13 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use('/teachers', teacher);
-app.use('/students', passport.authenticate('jwt', { session: false }), student);
-app.use('/attendances', passport.authenticate('jwt', { session: false }), attendance);
-app.use('/programs', passport.authenticate('jwt', { session: false }), program);
-app.use('/groups', passport.authenticate('jwt', { session: false }), group);
-app.use('/payments', passport.authenticate('jwt', { session: false }), payment);
+app.use('/students', student);
+app.use('/attendances', attendance);
+app.use('/programs', program);
+app.use('/groups', group);
+app.use('/payments', payment);
+
+// app.use('/payments', passport.authenticate('jwt', { session: false }), payment);
 
 app.use(handleError);
 
