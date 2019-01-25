@@ -28,7 +28,7 @@ export default class PaymentsList extends React.Component {
   render() {
     return (
       <div className="List">
-        <PageHeader>Payments</PageHeader>
+        <h3>Payments</h3>
         <Button bsStyle="primary" bsSize="large" onClick={this.handleShow}>
           Add
         </Button>

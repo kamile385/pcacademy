@@ -27,7 +27,7 @@ export default class ProgramsList extends React.Component {
   render() {
     return (
       <div className="List">
-        <PageHeader>Programs</PageHeader>
+        <h3>Programs</h3>
         <Button bsStyle="primary" bsSize="large" onClick={this.handleShow}>
           Add
         </Button>

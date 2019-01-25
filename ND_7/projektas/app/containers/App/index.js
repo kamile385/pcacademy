@@ -4,7 +4,7 @@ import NotFoundPage from '../NotFoundPage/Loadable';
 import NavBar from '../NavBar';
 import HomePage from '../HomePage/Loadable';
 import SignupPage from '../SignUpPage/Loadable';
-import ListPage from '../ListPage';
+
 import LoginPage from '../LoginPage/Loadable';
 import AttendancesList from '../AttendancesList/Loadable';
 import AttendancesById from '../AttendancesById/Loadable';
@@ -21,19 +21,19 @@ import PaymentsById from '../PaymentsById/Loadable';
 
 import ProgramsList from '../ProgramsList/Loadable';
 import ProgramsById from '../ProgramsById/Loadable';
-
+import Footer from '../Footer';
 import GlobalStyle from '../../global-styles';
 
 export default function App() {
   return (
     <div>
       <NavBar />
-      <div className="container">
+      <div className="jumbotron" style={{ height: '1000px' }}>
         <Switch>
-          <Route exact path="/" component={HomePage} private />
+          <Route exact path="/" component={HomePage} />
           <Route exact path="/login" component={LoginPage} />
           <Route exact path="/signup" component={SignupPage} />
-          <Route exact path="/list" component={ListPage} />
+
           <Route exact path="/attendances" component={AttendancesList} />
           <Route exact path="/attendances/:id" component={AttendancesById} />
 
@@ -53,6 +53,7 @@ export default function App() {
         </Switch>
         <GlobalStyle />
       </div>
+      <Footer />
     </div>
   );
 }

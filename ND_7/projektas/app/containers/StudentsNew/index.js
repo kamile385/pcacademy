@@ -10,7 +10,7 @@ import makeSelectStudentsNew from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 import { getStudents, createStudent } from './actions';
-import StudentFrom from '../../components/Forms/newStudent';
+import StudentForm from '../../components/Forms/newStudent';
 
 export class StudentsNew extends React.Component {
   componentDidMount() {
@@ -20,6 +20,7 @@ export class StudentsNew extends React.Component {
 
   submit = data => {
     this.props.createStudent(data);
+    this.props.history.push('/students');
   };
 
   // state = {
@@ -121,7 +122,7 @@ export class StudentsNew extends React.Component {
     const { students } = this.props;
     return (
       <div>
-        <StudentFrom onSubmit={this.submit} />
+        <StudentForm onSubmit={this.submit} />
       </div>
     );
     // const {
@@ -212,6 +213,7 @@ StudentsNew.propTypes = {
   getStudents: PropTypes.func,
   students: PropTypes.array,
   createStudent: PropTypes.func,
+  history: PropTypes.object,
 };
 
 const mapStateToProps = makeSelectStudentsNew();

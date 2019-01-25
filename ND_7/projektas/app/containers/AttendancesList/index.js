@@ -28,7 +28,7 @@ export default class AttendancesList extends React.Component {
   render() {
     return (
       <div className={Style.List}>
-        <PageHeader>Attendances</PageHeader>
+        <h3>Attendances</h3>
         <Button bsStyle="primary" bsSize="large" onClick={this.handleShow}>
           Add
         </Button>

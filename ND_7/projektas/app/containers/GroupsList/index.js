@@ -28,7 +28,7 @@ export default class GroupsList extends React.Component {
   render() {
     return (
       <div className="List">
-        <PageHeader>Groups</PageHeader>
+        <h3>Groups</h3>
         <Button bsStyle="primary" bsSize="large" onClick={this.handleShow}>
           Add
         </Button>

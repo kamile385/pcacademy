@@ -79,6 +79,7 @@
     "prop-types": "15.6.2",
     "react": "^16.6.0",
     "react-bootstrap": "^0.32.4",
+    "react-countup": "^4.0.0",
     "react-dom": "^16.6.0",
     "react-helmet": "5.2.0",
     "react-intl": "2.7.2",

@@ -1,14 +1,17 @@
 .card a:hover{
-    text-decoration: none;
     color: darkgray;
 }
 
-.cardTitle{
+.cardTitle{    
     color: black;
     text-align: center;
 }
 
 .cardBody{
+    text-align: center;
+}
+
+.cardBody:hover{
     text-align: center;
 }
 
