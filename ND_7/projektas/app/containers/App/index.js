@@ -28,7 +28,7 @@ export default function App() {
   return (
     <div>
       <NavBar />
-      <div className="jumbotron" style={{ height: '1000px' }}>
+      <div className="jumbotron">
         <Switch>
           <Route exact path="/" component={HomePage} />
           <Route exact path="/login" component={LoginPage} />

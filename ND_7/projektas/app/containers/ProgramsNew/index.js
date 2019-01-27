@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Button, FormGroup, FormControl, ControlLabel } from 'react-bootstrap';
 
-export default class NewProgram extends Component {
+export default class NewProgram extends React.Component {
   constructor(props) {
     super(props);
 

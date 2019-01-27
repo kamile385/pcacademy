@@ -5,4 +5,7 @@ export default {
   SIGNUP: {
     BASE: '/signup/',
   },
+  PROGRAMS: {
+    BASE: '/programs/',
+  },
 };

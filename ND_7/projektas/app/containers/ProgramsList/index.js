@@ -1,10 +1,23 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { Table, PageHeader, Button, Modal } from 'react-bootstrap';
-import data from '../../MOCK_DATA_programs.json';
-import ProgramsNew from '../ProgramsNew';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
 
-export default class ProgramsList extends React.Component {
+import { Table, Modal } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+import injectSaga from '../../utils/injectSaga';
+import injectReducer from '../../utils/injectReducer';
+import reducer from './reducer';
+import saga from './saga';
+
+import makeSelectProgramsList from './selectors';
+
+import { getPrograms, createProgram } from './actions';
+import ProgramForm from '../../components/Forms/newProgram';
+import Style from './style.css';
+// import ProgramsNew from '../ProgramsNew';
+
+export class ProgramsList extends React.Component {
   constructor(props, context) {
     super(props, context);
 
@@ -24,38 +37,87 @@ export default class ProgramsList extends React.Component {
     this.setState({ show: true });
   }
 
+  componentDidMount() {
+    console.log(this.props);
+    this.props.getPrograms();
+  }
+
+  submit = data => {
+    this.props.createProgram(data);
+  };
+
   render() {
+    const { programs } = this.props;
     return (
-      <div className="List">
+      <div>
         <h3>Programs</h3>
-        <Button bsStyle="primary" bsSize="large" onClick={this.handleShow}>
-          Add
-        </Button>
+
+        <button
+          className="btn btn-success"
+          type="submit"
+          onClick={this.handleShow}
+          style={{
+            cursor: 'pointer',
+            float: 'right',
+            color: 'white',
+            marginRight: '1rem',
+          }}
+        >
+          <i
+            className="fas fa-plus"
+            style={{
+              fontSize: '20px',
+            }}
+          />
+        </button>
+
         <Modal show={this.state.show} onHide={this.handleClose}>
           <Modal.Header closeButton />
           <Modal.Body>
-            <ProgramsNew />
+            <ProgramForm onSubmit={this.submit} />
           </Modal.Body>
         </Modal>
 
-        <Table responsive>
+        <Table responsive hover>
           <thead>
             <tr>
-              <th>ID</th>
+              {/* <th>ID</th> */}
               <th>NAME</th>
               <th>GROUP GRADE</th>
               <th>DESCRIPTION</th>
+              <th>TEACHER</th>
+              <th />
             </tr>
           </thead>
           <tbody>
-            {data.map(item => (
+            {programs.map(item => (
               <tr key={item.id}>
-                <td>
+                {/* <td>
                   <Link to={`/programs/${item.id}`}>{item.id}</Link>
-                </td>
+                </td> */}
+
                 <td>{item.name}</td>
                 <td>{item.group_grade}</td>
                 <td>{item.description}</td>
+                <td>{item.teacher.teacher_name_surname}</td>
+                <td>
+                  <i
+                    className="fas fa-trash"
+                    style={{ cursor: 'pointer', float: 'right', color: 'red' }}
+                    // onClick={this.onDeleteClick.bind(this, id)}
+                  />
+                  <Link to={`students/edit/${item.id}`}>
+                    <i
+                      className="fas fa-pencil-alt"
+                      style={{
+                        cursor: 'pointer',
+                        float: 'right',
+                        color: 'blue',
+                        marginRight: '1rem',
+                      }}
+                    />
+                  </Link>
+                </td>
               </tr>
             ))}
           </tbody>
@@ -64,3 +126,32 @@ export default class ProgramsList extends React.Component {
     );
   }
 }
+
+ProgramsList.propTypes = {
+  getPrograms: PropTypes.func,
+  programs: PropTypes.array,
+  createProgram: PropTypes.func,
+};
+
+const mapStateToProps = makeSelectProgramsList();
+
+function mapDispatchToProps(dispatch) {
+  return {
+    getPrograms: () => dispatch(getPrograms()),
+    createProgram: data => dispatch(createProgram(data)),
+  };
+}
+
+const withConnect = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+);
+
+const withReducer = injectReducer({ key: 'programsList', reducer });
+const withSaga = injectSaga({ key: 'programsList', saga });
+
+export default compose(
+  withReducer,
+  withSaga,
+  withConnect,
+)(ProgramsList);
