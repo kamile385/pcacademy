@@ -7,7 +7,6 @@ import SignupPage from '../SignUpPage/Loadable';
 
 import LoginPage from '../LoginPage/Loadable';
 import AttendancesList from '../AttendancesList/Loadable';
-import AttendancesById from '../AttendancesById/Loadable';
 
 import GroupsList from '../GroupsList/Loadable';
 // import GroupsById from '../GroupsById/Loadable';
@@ -37,7 +36,7 @@ export default function App() {
           <Route exact path="/signup" component={SignupPage} />
 
           <Route exact path="/attendances" component={AttendancesList} />
-          <Route exact path="/attendances/:id" component={AttendancesById} />
+          <Route exact path="/attendances/:id" component={AttendancesList} />
 
           <Route exact path="/groups" component={GroupsList} />
           <Route exact path="/groups/:id" component={GroupsList} />

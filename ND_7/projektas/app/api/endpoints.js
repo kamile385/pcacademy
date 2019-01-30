@@ -18,4 +18,8 @@ export default {
     BASE: '/attendances/',
     EDIT: '/attendance/',
   },
+  PAYMENTS: {
+    BASE: '/payments/',
+    EDIT: '/payment/',
+  },
 };

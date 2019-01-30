@@ -1,11 +1,25 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { Table, PageHeader, Button, Modal } from 'react-bootstrap';
-import data from '../../MOCK_DATA_payments.json';
-import PaymentsNew from '../PaymentsNew';
-import Style from './style.css';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
 
-export default class PaymentsList extends React.Component {
+import { Table, Modal } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+import injectSaga from '../../utils/injectSaga';
+import injectReducer from '../../utils/injectReducer';
+import reducer from './reducer';
+import saga from './saga';
+
+import makeSelectPaymentsList from './selectors';
+import {
+  getPayments,
+  createPayment,
+  deletePayment,
+  editPayment,
+} from './actions';
+import NewPaymentForm from '../../components/Forms/newPayment';
+
+export class PaymentsList extends React.Component {
   constructor(props, context) {
     super(props, context);
 
@@ -25,43 +39,115 @@ export default class PaymentsList extends React.Component {
     this.setState({ show: true });
   }
 
+  componentDidMount() {
+    console.log(this.props);
+    this.props.getPayments();
+  }
+
+  submit = data => {
+    this.props.createPayment(data);
+  };
+
+  submitEdit = id => {
+    this.props.editPayment(id);
+  };
+
+  delete = id => {
+    this.props.deletePayment(id);
+  };
+
   render() {
+    const { payments } = this.props;
     return (
-      <div className="List">
+      <div>
         <h3>Payments</h3>
-        <Button bsStyle="primary" bsSize="large" onClick={this.handleShow}>
-          Add
-        </Button>
+
+        <button
+          className="btn btn-success"
+          type="submit"
+          onClick={this.handleShow}
+          style={{
+            cursor: 'pointer',
+            float: 'right',
+            color: 'white',
+            marginRight: '1rem',
+          }}
+        >
+          <i
+            className="fas fa-plus"
+            style={{
+              fontSize: '20px',
+            }}
+          />
+        </button>
+
         <Modal show={this.state.show} onHide={this.handleClose}>
           <Modal.Header closeButton />
           <Modal.Body>
-            <PaymentsNew />
+            <NewPaymentForm onSubmit={this.submit} />
           </Modal.Body>
         </Modal>
-        <Table responsive>
+
+        <Table responsive hover>
           <thead>
             <tr>
-              <th>ID</th>
               <th>MONTH</th>
               <th>AMOUNT</th>
               <th>STATE FINANCING</th>
               <th>PRAISE</th>
               <th>NOT FIRST YEAR</th>
               <th>SECOND PROGRAM</th>
+              <th>STUDENT</th>
+              <th />
             </tr>
           </thead>
           <tbody>
-            {data.map(item => (
-              <tr key={item.id}>
-                <td>
-                  <Link to={`/payments/${item.id}`}>{item.id}</Link>
-                </td>
+            {payments.map(item => (
+              <tr key={item._id}>
                 <td>{item.month}</td>
                 <td>{item.amount}</td>
                 <td>{item.state_financing}</td>
                 <td>{item.praise}</td>
                 <td>{item.not_first_year}</td>
                 <td>{item.second_program}</td>
+                <td>{item.student.name}</td>
+                <td>
+                  <button
+                    className="btn btn-outline-danger"
+                    type="button"
+                    style={{
+                      cursor: 'pointer',
+                      float: 'right',
+                    }}
+                    onClick={() => {
+                      this.delete(item.id);
+                    }}
+                  >
+                    <i
+                      className="fas fa-trash"
+                      style={{
+                        cursor: 'pointer',
+                      }}
+                    />
+                  </button>
+
+                  <button
+                    className="btn btn-outline-primary"
+                    type="submit"
+                    style={{
+                      cursor: 'pointer',
+                    }}
+                  >
+                    <Link to={`payment/${item.id}`}>
+                      <i
+                        className="fas fa-pencil-alt"
+                        style={{
+                          cursor: 'pointer',
+                        }}
+                      />
+                    </Link>
+                  </button>
+                </td>
               </tr>
             ))}
           </tbody>
@@ -70,3 +156,36 @@ export default class PaymentsList extends React.Component {
     );
   }
 }
+
+PaymentsList.propTypes = {
+  getPayments: PropTypes.func,
+  payments: PropTypes.array,
+  createPayment: PropTypes.func,
+  deletePayment: PropTypes.func.isRequired,
+  editPayment: PropTypes.func,
+};
+
+const mapStateToProps = makeSelectPaymentsList();
+
+function mapDispatchToProps(dispatch) {
+  return {
+    getPayments: () => dispatch(getPayments()),
+    createPayment: data => dispatch(createPayment(data)),
+    deletePayment: id => dispatch(deletePayment(id)),
+    editPayment: id => dispatch(editPayment(id)),
+  };
+}
+
+const withConnect = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+);
+
+const withReducer = injectReducer({ key: 'paymentsList', reducer });
+const withSaga = injectSaga({ key: 'paymentsList', saga });
+
+export default compose(
+  withReducer,
+  withSaga,
+  withConnect,
+)(PaymentsList);
