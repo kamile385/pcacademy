@@ -1,6 +1,7 @@
 import { createSelector } from 'reselect';
+import { initialState } from './reducer';
 
-const selectStudentsList = state => state.get('studentsList');
+const selectStudentsList = state => state.get('studentsList', initialState);
 
 const makeSelectStudentsList = () =>
   createSelector(selectStudentsList, subState => subState.toJS());

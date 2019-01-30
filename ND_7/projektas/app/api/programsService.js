@@ -9,3 +9,11 @@ export function get() {
 export function create(program) {
   return axios.post(`${CONFIG.URL}${ENDPOINTS.PROGRAMS.BASE}`, program);
 }
+
+export function remove(id) {
+  return axios.delete(`${CONFIG.URL}${ENDPOINTS.PROGRAMS.BASE}${id}`);
+}
+
+export function edit(id) {
+  return axios.post(`${CONFIG.URL}${ENDPOINTS.PROGRAMS.EDIT}${id}`);
+}

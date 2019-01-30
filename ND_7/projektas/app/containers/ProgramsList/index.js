@@ -11,11 +11,14 @@ import reducer from './reducer';
 import saga from './saga';
 
 import makeSelectProgramsList from './selectors';
-
-import { getPrograms, createProgram } from './actions';
-import ProgramForm from '../../components/Forms/newProgram';
-import Style from './style.css';
-// import ProgramsNew from '../ProgramsNew';
+import {
+  getPrograms,
+  createProgram,
+  deleteProgram,
+  editProgram,
+} from './actions';
+import NewProgramForm from '../../components/Forms/newProgram';
+// import EditProgramForm from '../../components/Forms/editProgram';
 
 export class ProgramsList extends React.Component {
   constructor(props, context) {
@@ -46,6 +49,14 @@ export class ProgramsList extends React.Component {
     this.props.createProgram(data);
   };
 
+  submitEdit = id => {
+    this.props.editProgram(id);
+  };
+
+  delete = id => {
+    this.props.deleteProgram(id);
+  };
+
   render() {
     const { programs } = this.props;
     return (
@@ -74,14 +85,13 @@ export class ProgramsList extends React.Component {
         <Modal show={this.state.show} onHide={this.handleClose}>
           <Modal.Header closeButton />
           <Modal.Body>
-            <ProgramForm onSubmit={this.submit} />
+            <NewProgramForm onSubmit={this.submit} />
           </Modal.Body>
         </Modal>
 
         <Table responsive hover>
           <thead>
             <tr>
-              {/* <th>ID</th> */}
               <th>NAME</th>
               <th>GROUP GRADE</th>
               <th>DESCRIPTION</th>
@@ -92,36 +102,52 @@ export class ProgramsList extends React.Component {
           <tbody>
             {programs.map(item => (
               <tr key={item.id}>
-                {/* <td>
-                  <Link to={`/programs/${item.id}`}>{item.id}</Link>
-                </td> */}
-
                 <td>{item.name}</td>
                 <td>{item.group_grade}</td>
                 <td>{item.description}</td>
                 <td>{item.teacher.teacher_name_surname}</td>
                 <td>
-                  <i
-                    className="fas fa-trash"
-                    style={{ cursor: 'pointer', float: 'right', color: 'red' }}
-                    // onClick={this.onDeleteClick.bind(this, id)}
-                  />
-                  <Link to={`students/edit/${item.id}`}>
+                  <button
+                    className="btn btn-outline-danger"
+                    type="button"
+                    style={{
+                      cursor: 'pointer',
+                      float: 'right',
+                    }}
+                    onClick={() => {
+                      this.delete(item.id);
+                    }}
+                  >
                     <i
-                      className="fas fa-pencil-alt"
+                      className="fas fa-trash"
                       style={{
                         cursor: 'pointer',
-                        float: 'right',
-                        color: 'blue',
-                        marginRight: '1rem',
                       }}
                     />
-                  </Link>
+                  </button>
+
+                  <button
+                    className="btn btn-outline-primary"
+                    type="submit"
+                    style={{
+                      cursor: 'pointer',
+                    }}
+                  >
+                    <Link to={`program/${item.id}`}>
+                      <i
+                        className="fas fa-pencil-alt"
+                        style={{
+                          cursor: 'pointer',
+                        }}
+                      />
+                    </Link>
+                  </button>
                 </td>
               </tr>
             ))}
           </tbody>
         </Table>
+        {/* <EditProgramForm onSubmit={this.submitEdit(item.id)} /> */}
       </div>
     );
   }
@@ -131,6 +157,8 @@ ProgramsList.propTypes = {
   getPrograms: PropTypes.func,
   programs: PropTypes.array,
   createProgram: PropTypes.func,
+  deleteProgram: PropTypes.func.isRequired,
+  editProgram: PropTypes.func,
 };
 
 const mapStateToProps = makeSelectProgramsList();
@@ -139,6 +167,8 @@ function mapDispatchToProps(dispatch) {
   return {
     getPrograms: () => dispatch(getPrograms()),
     createProgram: data => dispatch(createProgram(data)),
+    deleteProgram: id => dispatch(deleteProgram(id)),
+    editProgram: id => dispatch(editProgram(id)),
   };
 }
 

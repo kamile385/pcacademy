@@ -3,7 +3,7 @@ import { Field, reduxForm } from 'redux-form/immutable';
 import PropTypes from 'prop-types';
 import Style from './style.css';
 
-function NewProgram(props) {
+function NewGroup(props) {
   const { handleSubmit } = props;
   return (
     <div className="card mb-3">
@@ -30,20 +30,40 @@ function NewProgram(props) {
             />
           </div>
           <div>
-            <label htmlFor="description">Description</label>
+            <label htmlFor="day_of_week">Day of the week</label>
             <br />
             <Field
-              name="description"
+              name="day_of_week"
               component="input"
               type="text"
               className={Style.redux_form_field}
             />
           </div>
           <div>
-            <label htmlFor="teacher">Teacher</label>
+            <label htmlFor="time_from">Time from</label>
             <br />
             <Field
-              name="teacher"
+              name="time_from"
+              component="input"
+              type="text"
+              className={Style.redux_form_field}
+            />
+          </div>
+          <div>
+            <label htmlFor="time_to">Time to</label>
+            <br />
+            <Field
+              name="time_to"
+              component="input"
+              type="text"
+              className={Style.redux_form_field}
+            />
+          </div>
+          <div>
+            <label htmlFor="program">Program</label>
+            <br />
+            <Field
+              name="program"
               component="input"
               type="text"
               className={Style.redux_form_field}
@@ -59,10 +79,10 @@ function NewProgram(props) {
   );
 }
 
-NewProgram.propTypes = {
+NewGroup.propTypes = {
   handleSubmit: PropTypes.func,
 };
 
 export default reduxForm({
-  form: 'newProgram',
-})(NewProgram);
+  form: 'newGroup',
+})(NewGroup);

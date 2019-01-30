@@ -3,7 +3,7 @@ import { Field, reduxForm } from 'redux-form/immutable';
 import PropTypes from 'prop-types';
 import Style from './style.css';
 
-function NewProgram(props) {
+function EditProgram(props) {
   const { handleSubmit } = props;
   return (
     <div className="card mb-3">
@@ -27,6 +27,7 @@ function NewProgram(props) {
               component="input"
               type="text"
               className={Style.redux_form_field}
+              // default={this.props}
             />
           </div>
           <div>
@@ -59,10 +60,10 @@ function NewProgram(props) {
   );
 }
 
-NewProgram.propTypes = {
+EditProgram.propTypes = {
   handleSubmit: PropTypes.func,
 };
 
 export default reduxForm({
-  form: 'newProgram',
-})(NewProgram);
+  form: 'editProgram',
+})(EditProgram);

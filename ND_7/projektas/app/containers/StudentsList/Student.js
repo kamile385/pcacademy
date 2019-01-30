@@ -1,31 +1,36 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-export default class Student extends Component {
+export default class Student extends React.Component {
   state = {
     showStudentInfo: false,
   };
 
-  onDeleteClick = id => {};
+  // delete = _id => {
+  //   this.props.deleteStudent(_id);
+  // };
 
   render() {
-    const {
-      id,
-      student_name_surname,
-      parent_name_surname,
-      address,
-      telephone,
-      email,
-      group,
-      identification_number,
-    } = this.props.student;
+    const student = this.props.item;
     const { showStudentInfo } = this.state;
 
+    // const {
+    //   _id,
+    //   student_name_surname,
+    //   parent_name_surname,
+    //   address,
+    //   telephone,
+    //   email,
+    //   group,
+    //   identification_number,
+    // } = student;
+
+    // console.log(student);
     return (
       <div className="card card-body mb-3">
         <h4>
-          {student_name_surname}{' '}
+          {student.student_name_surname}{' '}
           <i
             onClick={() =>
               this.setState({
@@ -38,9 +43,11 @@ export default class Student extends Component {
           <i
             className="fas fa-trash"
             style={{ cursor: 'pointer', float: 'right', color: 'red' }}
-            onClick={this.onDeleteClick.bind(this, id)}
+            // onClick={() => {
+            //   this.delete(_id);
+            // }}
           />
-          <Link to={`students/edit/${id}`}>
+          <Link to={`students/edit/${student._id}`}>
             <i
               className="fas fa-pencil-alt"
               style={{
@@ -55,14 +62,14 @@ export default class Student extends Component {
         {showStudentInfo ? (
           <ul className="list-group">
             <li className="list-group-item">
-              PARENT NAME SURNAME: {parent_name_surname}
+              PARENT FULL NAME: {student.parent_name_surname}
             </li>
-            <li className="list-group-item">ADDRESS: {address}</li>
-            <li className="list-group-item">TELEPHONE: {telephone}</li>
-            <li className="list-group-item">EMAIL: {email}</li>
-            <li className="list-group-item">GROUP: {group}</li>
+            <li className="list-group-item">ADDRESS: {student.address}</li>
+            <li className="list-group-item">TELEPHONE: {student.telephone}</li>
+            <li className="list-group-item">EMAIL: {student.email}</li>
+            <li className="list-group-item">GROUP: {student.group}</li>
             <li className="list-group-item">
-              IDENTIFICATION NO: {identification_number}
+              IDENTIFICATION NO: {student.identification_number}
             </li>
           </ul>
         ) : null}
@@ -70,7 +77,3 @@ export default class Student extends Component {
     );
   }
 }
-
-Student.propTypes = {
-  student: PropTypes.object.isRequired,
-};
