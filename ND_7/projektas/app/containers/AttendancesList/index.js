@@ -1,11 +1,25 @@
 import React from 'react';
-import { Table, PageHeader, Button, Modal } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
-import AttendanceNew from 'containers/AttendanceNew';
-import data from '../../MOCK_DATA_attendances.json';
-import Style from './style.css';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
 
-export default class AttendancesList extends React.Component {
+import { Table, Modal } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+import injectSaga from '../../utils/injectSaga';
+import injectReducer from '../../utils/injectReducer';
+import reducer from './reducer';
+import saga from './saga';
+
+import makeSelectAttendancesList from './selectors';
+import {
+  getAttendances,
+  createAttendance,
+  deleteAttendance,
+  editAttendance,
+} from './actions';
+import NewAttendanceForm from '../../components/Forms/newAttendance';
+
+export class AttendancesList extends React.Component {
   constructor(props, context) {
     super(props, context);
 
@@ -25,37 +39,108 @@ export default class AttendancesList extends React.Component {
     this.setState({ show: true });
   }
 
+  componentDidMount() {
+    this.props.getAttendances();
+  }
+
+  submit = data => {
+    this.props.createAttendance(data);
+  };
+
+  submitEdit = id => {
+    this.props.editAttendance(id);
+  };
+
+  delete = id => {
+    this.props.deleteAttendance(id);
+  };
+
   render() {
+    const { attendances } = this.props;
     return (
-      <div className={Style.List}>
+      <div>
         <h3>Attendances</h3>
-        <Button bsStyle="primary" bsSize="large" onClick={this.handleShow}>
-          Add
-        </Button>
+
+        <button
+          className="btn btn-success"
+          type="submit"
+          onClick={this.handleShow}
+          style={{
+            cursor: 'pointer',
+            float: 'right',
+            color: 'white',
+            marginRight: '1rem',
+          }}
+        >
+          <i
+            className="fas fa-plus"
+            style={{
+              fontSize: '20px',
+            }}
+          />
+        </button>
+
         <Modal show={this.state.show} onHide={this.handleClose}>
           <Modal.Header closeButton />
           <Modal.Body>
-            <AttendanceNew />
+            <NewAttendanceForm onSubmit={this.submit} />
           </Modal.Body>
         </Modal>
-        <Table responsive>
+
+        <Table responsive hover>
           <thead>
             <tr>
-              <th>ID</th>
               <th>DATE</th>
               <th>STATUS</th>
               <th>REMARK</th>
+              <th>STUDENT</th>
+              <th />
             </tr>
           </thead>
           <tbody>
-            {data.map(item => (
-              <tr key={item.id}>
-                <td>
-                  <Link to={`/attendances/${item.id}`}>{item.id}</Link>
-                </td>
+            {attendances.map(item => (
+              <tr key={item._id}>
                 <td>{item.date}</td>
                 <td>{item.status}</td>
                 <td>{item.remark}</td>
+                <td>{item.student.student_name_surname}</td>
+                <td>
+                  <button
+                    className="btn btn-outline-danger"
+                    type="button"
+                    style={{
+                      cursor: 'pointer',
+                      float: 'right',
+                    }}
+                    onClick={() => {
+                      this.delete(item.id);
+                    }}
+                  >
+                    <i
+                      className="fas fa-trash"
+                      style={{
+                        cursor: 'pointer',
+                      }}
+                    />
+                  </button>
+
+                  <button
+                    className="btn btn-outline-primary"
+                    type="submit"
+                    style={{
+                      cursor: 'pointer',
+                    }}
+                  >
+                    <Link to={`attendance/${item.id}`}>
+                      <i
+                        className="fas fa-pencil-alt"
+                        style={{
+                          cursor: 'pointer',
+                        }}
+                      />
+                    </Link>
+                  </button>
+                </td>
               </tr>
             ))}
           </tbody>
@@ -64,3 +149,36 @@ export default class AttendancesList extends React.Component {
     );
   }
 }
+
+AttendancesList.propTypes = {
+  getAttendances: PropTypes.func,
+  attendances: PropTypes.array,
+  createAttendance: PropTypes.func,
+  deleteAttendance: PropTypes.func.isRequired,
+  editAttendance: PropTypes.func,
+};
+
+const mapStateToProps = makeSelectAttendancesList();
+
+function mapDispatchToProps(dispatch) {
+  return {
+    getAttendances: () => dispatch(getAttendances()),
+    createAttendance: data => dispatch(createAttendance(data)),
+    deleteAttendance: id => dispatch(deleteAttendance(id)),
+    editAttendance: id => dispatch(editAttendance(id)),
+  };
+}
+
+const withConnect = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+);
+
+const withReducer = injectReducer({ key: 'attendancesList', reducer });
+const withSaga = injectSaga({ key: 'attendancesList', saga });
+
+export default compose(
+  withReducer,
+  withSaga,
+  withConnect,
+)(AttendancesList);

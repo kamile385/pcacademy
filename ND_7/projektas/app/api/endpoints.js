@@ -14,4 +14,8 @@ export default {
     BASE: '/groups/',
     EDIT: '/group/',
   },
+  ATTENDANCES: {
+    BASE: '/attendances/',
+    EDIT: '/attendance/',
+  },
 };
