@@ -45,7 +45,7 @@ app.use('/payments', payment);
 
 app.use(handleError);
 
-const listener = app.listen(CONFIG.PORT, () => {
+const listener = app.listen(process.env.PORT || CONFIG.PORT, () => {
   console.log(`Server started! listening on port: ${listener.address().port}`);
 });
 

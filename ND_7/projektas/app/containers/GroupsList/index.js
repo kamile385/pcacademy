@@ -123,7 +123,8 @@ export class GroupsList extends React.Component {
                       }}
                     />
                   </button>
-
+                </td>
+                <td>
                   <button
                     className="btn btn-outline-primary"
                     type="submit"

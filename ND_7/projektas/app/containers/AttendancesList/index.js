@@ -57,10 +57,10 @@ export class AttendancesList extends React.Component {
 
   render() {
     const { attendances } = this.props;
+    console.log(attendances);
     return (
       <div>
         <h3>Attendances</h3>
-
         <button
           className="btn btn-success"
           type="submit"
@@ -123,7 +123,8 @@ export class AttendancesList extends React.Component {
                       }}
                     />
                   </button>
-
+                </td>
+                <td>
                   <button
                     className="btn btn-outline-primary"
                     type="submit"

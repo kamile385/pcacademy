@@ -96,7 +96,7 @@ export class StudentsList extends React.Component {
 
         <React.Fragment>
           {students.length > 0 &&
-            students.map(item => <Student key={item.id} item={item} />)}
+            students.map(item => <Student key={item._id} item={item} />)}
           {students.length === 0 && <h3>No data</h3>}
         </React.Fragment>
       </div>

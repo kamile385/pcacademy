@@ -6,9 +6,17 @@ export default function HomePage() {
     <div className="container-fluid">
       <div className="row content">
         <div className="col-sm-12">
-          <div className="well">
-            <h4>Dashboard</h4>
-            <p>Some text..</p>
+          <div align="center">
+            <div className="well">
+              <h4>Dashboard</h4>
+
+              <textarea
+                rows="3"
+                cols="90"
+                placeholder="Leave a note"
+                style={{ background: 'white', width: '100%' }}
+              />
+            </div>
           </div>
           <div className="row">
             <div className="col-sm-4">

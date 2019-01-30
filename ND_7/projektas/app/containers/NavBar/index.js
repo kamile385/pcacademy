@@ -51,7 +51,7 @@ export default function NavBar() {
                 aria-haspopup="true"
                 aria-expanded="false"
               >
-                More
+                Menu
               </Link>
               <div className="dropdown-menu" aria-labelledby="navbarDropdown">
                 <Link className="dropdown-item" to="/students">
